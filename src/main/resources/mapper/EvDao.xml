@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.softwareEngineering.electrocar.dao.EvDao">
+
+    <resultMap type="com.softwareEngineering.electrocar.entity.Ev" id="EvMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="brand" column="brand" jdbcType="VARCHAR"/>
+        <result property="model" column="model" jdbcType="VARCHAR"/>
+        <result property="price" column="price" jdbcType="NUMERIC"/>
+        <result property="image" column="image" jdbcType="VARCHAR"/>
+        <result property="businessId" column="business_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="EvMap">
+        select id,
+               name,
+               brand,
+               model,
+               price,
+               image,
+               business_id
+        from ev
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="EvMap">
+        select
+        id, name, brand, model, price, image, business_id
+        from ev
+        <where>
+            <if test="ev.id != null">
+                and id = #{ev.id}
+            </if>
+            <if test="ev.name != null and ev.name != ''">
+                and name = #{ev.name}
+            </if>
+            <if test="ev.brand != null and ev.brand != ''">
+                and brand = #{ev.brand}
+            </if>
+            <if test="ev.model != null and ev.model != ''">
+                and model = #{ev.model}
+            </if>
+            <if test="ev.price != null">
+                and price = #{ev.price}
+            </if>
+            <if test="ev.image != null and ev.image != ''">
+                and image = #{ev.image}
+            </if>
+            <if test="ev.businessId != null">
+                and business_id = #{ev.businessId}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from ev
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="brand != null and brand != ''">
+                and brand = #{brand}
+            </if>
+            <if test="model != null and model != ''">
+                and model = #{model}
+            </if>
+            <if test="price != null">
+                and price = #{price}
+            </if>
+            <if test="image != null and image != ''">
+                and image = #{image}
+            </if>
+            <if test="businessId != null">
+                and business_id = #{businessId}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into ev(name, brand, model, price, image, business_id)
+        values (#{name}, #{brand}, #{model}, #{price}, #{image}, #{businessId})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into ev(name, brand, model, price, image, business_id)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.name}, #{entity.brand}, #{entity.model}, #{entity.price}, #{entity.image}, #{entity.businessId})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into ev(name, brand, model, price, image, business_id)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.name}, #{entity.brand}, #{entity.model}, #{entity.price}, #{entity.image}, #{entity.businessId})
+        </foreach>
+        on duplicate key update
+        name = values(name),
+        brand = values(brand),
+        model = values(model),
+        price = values(price),
+        image = values(image),
+        business_id = values(business_id)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update ev
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="brand != null and brand != ''">
+                brand = #{brand},
+            </if>
+            <if test="model != null and model != ''">
+                model = #{model},
+            </if>
+            <if test="price != null">
+                price = #{price},
+            </if>
+            <if test="image != null and image != ''">
+                image = #{image},
+            </if>
+            <if test="businessId != null">
+                business_id = #{businessId},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from ev
+        where id = #{id}
+    </delete>
+
+</mapper>
+

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>后台管理</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+</head>
+<body>
+<div id="server_background">
+    <el-dialog
+            title="提示"
+            :visible.sync="dialogVisible"
+            width="30%"
+            close-on-click-modal="false"
+            close-on-press-escape="false"
+            show-close="false"
+            :before-close="verify"
+    >
+        <el-form :model="form">
+            <el-form-item label="秘钥">
+                <el-input v-model="form.password"></el-input>
+            </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+            <el-button type="primary" @click="verify">确 定</el-button>
+        </span>
+    </el-dialog>
+
+
+    <el-container class="bg-container">
+        <el-header class="bg-header">后台管理</el-header>
+        <el-container>
+            <el-aside class="bg-aside">
+                <el-menu
+                        default-active="1"
+                        class="bg-menu"
+                        router
+                        menu-trigger="click"
+                >
+                    <el-submenu index="1">
+                        <template slot="title">
+                            <i class="el-icon-goods"></i>
+                            <span>商家管理</span>
+                        </template>
+                        <el-menu-item index="/allBusiness">查看所有商家</el-menu-item>
+                        <el-menu-item index="/allElectrocar">查看所有商品</el-menu-item>
+                        <el-menu-item index="3">商家入驻</el-menu-item>
+                        <el-menu-item index="4">商家撤离</el-menu-item>
+                    </el-submenu>
+                    <el-submenu index="2">
+                        <template slot="title">
+                            <i class="el-icon-star-off"></i>
+                            <span>用户管理</span>
+                        </template>
+                        <el-menu-item index="/allUser">查看所有用户</el-menu-item>
+                        <el-menu-item index="/allOrder">查看所有用户订单</el-menu-item>
+                    </el-submenu>
+                </el-menu>
+            </el-aside>
+            <el-main class="bg-main">
+                <router-view></router-view>
+            </el-main>
+        </el-container>
+    </el-container>
+</div>
+</body>
+
+<!-- 引入组件库 -->
+<script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+<script src="https://unpkg.com/vue-router@3/dist/vue-router.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+<script>
+
+
+    Vue.use(VueRouter);
+
+    const allBusiness = {
+        template: '<iframe src = "all-business.html" style="width: 100%;height: 100%;border:none"></iframe>'
+    };
+    const allElectrocar = {
+        template: '<iframe src = "all-electrocar.html" style="width: 100%;height: 100%;border:none"></iframe>'
+    };
+    const allUser = {
+        template: '<iframe src = "all-user.html" style="width: 100%;height: 100%;border:none"></iframe>'
+    };
+    const allOrder = {
+        template: '<iframe src = "all-indent.html" style="width: 100%;height: 100%;border:none"></iframe>'
+    };
+
+    const routes = [
+        {
+            name: 'allBusiness',
+            path: '/allBusiness',
+            component: allBusiness
+        },
+        {
+            name: 'allElectrocar',
+            path: '/allElectrocar',
+            component: allElectrocar
+        },
+        {
+            name: 'allUser',
+            path: '/allUser',
+            component: allUser
+        },
+        {
+            name: 'allOrder',
+            path: '/allOrder',
+            component: allOrder
+        }
+    ];
+
+    const vueRouter = new VueRouter({
+        //配置路由
+        routes: routes,
+        mode: 'hash'
+    });
+
+
+    const vue = new Vue({
+        el: "#server_background",
+        router: vueRouter,
+        data: {
+            dialogVisible: true,
+            form: {
+                password: ""
+            }
+        },
+        methods: {
+            verify(){
+                this.dialogVisible = this.form.password !== '123456789';
+            }
+        },
+        created() {
+        },
+    })
+</script>
+</html>

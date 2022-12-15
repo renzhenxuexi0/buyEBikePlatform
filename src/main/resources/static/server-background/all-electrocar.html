@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+
+    <style>
+        .el-table .warning-row {
+            background: oldlace;
+        }
+
+        .el-table .success-row {
+            background: #f0f9eb;
+        }
+    </style>
+
+</head>
+<body>
+<div id="all_electrocar">
+    <el-table
+            :data="tableData"
+            style="width: 100%"
+            :row-class-name="tableRowClassName">
+        <el-table-column
+                type="index"
+                label="序列号"
+                width="180">
+        </el-table-column>
+        <el-table-column
+                prop="name"
+                label="电动车品牌"
+                width="180">
+        </el-table-column>
+        <el-table-column
+                prop="name"
+                label="电动车名"
+                width="180">
+        </el-table-column>
+        <el-table-column
+                prop="address"
+                label="型号">
+        </el-table-column>
+        <el-table-column
+                prop="address"
+                label="价格">
+        </el-table-column>
+        <el-table-column
+                prop="address"
+                label="库存">
+        </el-table-column>
+    </el-table>
+</div>
+</body>
+
+<!-- 引入组件库 -->
+<script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+<script>
+    new Vue({
+        el: "#all_electrocar",
+        data: {
+            tableData: []
+        },
+        methods: {
+            getAll() {
+                axios.get("/ev/page=0&size=10").then((res)=>{
+                  this.tableData =res.content;
+                });
+            },
+
+
+            tableRowClassName({row, rowIndex}) {
+                if (rowIndex === 1) {
+                    return 'warning-row';
+                } else if (rowIndex === 3) {
+                    return 'success-row';
+                }
+                return '';
+            }
+        },
+        create(){
+          this.getAll();
+        }
+    });
+
+</script>
+</html>

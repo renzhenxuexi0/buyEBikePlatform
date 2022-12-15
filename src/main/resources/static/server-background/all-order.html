@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+
+  <style>
+    .el-table .warning-row {
+      background: oldlace;
+    }
+
+    .el-table .success-row {
+      background: #f0f9eb;
+    }
+  </style>
+
+</head>
+<body>
+<div id="all_order">
+  <el-table
+          :data="tableData"
+          style="width: 100%"
+          :row-class-name="tableRowClassName">
+    <el-table-column
+            type="index"
+            label="序列号"
+            width="180">
+    </el-table-column>
+    <el-table-column
+            prop="name"
+            label="购买用户"
+            width="180">
+    </el-table-column>
+    <el-table-column
+            prop="address"
+            label="电动车名">
+    </el-table-column>
+    <el-table-column
+            prop="address"
+            label="商铺名">
+    </el-table-column>
+  </el-table>
+</div>
+</body>
+
+<script>
+  new Vue({
+    el: "#all_order",
+    data: {
+      tableData: []
+    },
+    methods: {
+      tableRowClassName({row, rowIndex}) {
+        if (rowIndex === 1) {
+          return 'warning-row';
+        } else if (rowIndex === 3) {
+          return 'success-row';
+        }
+        return '';
+      }
+    }
+  });
+
+</script>
+</html>
