@@ -1,0 +1,33 @@
+body {
+    background: #333333;
+    background-image: url("../image/EV.png");
+    background-repeat: no-repeat;
+    background-position: 0 -40%;
+
+}
+
+#RegisterData{
+    position: fixed;
+    left: 60%;
+    right: 0;
+    top: 30%;
+    bottom: 0;
+
+}
+h1{
+    position: fixed;
+    top: 20px;
+    left: 35%;
+    font-style: italic;
+    font-size: 50px;
+    color: white;
+}
+.userInput{
+    width: 50%;
+}
+#RegisterFrom{
+
+    background-color: white;
+    border-radius: 30px;
+    width: 80%;
+}

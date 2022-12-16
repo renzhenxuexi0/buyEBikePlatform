@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link href="../css/Login.css" rel="stylesheet" style="text:css"/>
+</head>
+<body>
+
+<div id="LoginData">
+    <h1>欢迎来到电动车以旧换新网站！</h1><br>
+    <el-form ref="user" :model="user" label-width="80px" label-height="80px" id="LoginFrom">
+        <el-form-item label="电话">
+            <el-input v-model="user.phone" class="userInput" style="width: 70%"
+                      suffix-icon="el-icon-user"></el-input>
+
+        </el-form-item>
+        <el-form-item label="密码">
+            <el-input v-model="user.password" class="userInput" style="width: 70%" suffix-icon="el-icon-goods">>
+            </el-input>
+        </el-form-item>
+        <el-form-item>
+            <el-button type="primary" @click="onLogin">登录</el-button>
+            <el-link type="info"
+                     href="http://localhost:8080/EBshop/src/Register.html">
+                注册
+            </el-link>
+        </el-form-item>
+    </el-form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<!-- 引入样式 -->
+<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+<!-- 引入组件库 -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
+<script>
+    axios.default.baseURL = "http://localhost:8080"
+
+    new Vue({
+        el: "#LoginData",
+        methods: {
+            onLogin() {
+                axios.get("/user/phone/" + this.user.phone+"/password/"+this.user.password).then((res) => {
+
+                    if (res.data!=null){
+
+                        this.user=res.data
+                        Cookies.set("userId", this.user.id, { expires: 1,path:'' })
+                        Cookies.set("username", this.user.username, { expires: 1,path:'' })
+                        Cookies.set("userAddress", this.user.address, { expires: 1,path:'' })
+                        Cookies.set("userPhone", this.user.phone, { expires: 1,path:'' })
+
+                        window.location.href="http://localhost:8080/EBshop/src/main.html"
+                    }else {
+                        alert("账号或密码错误")
+                    }
+                })
+            }
+        },
+        data: {
+            user: {
+                phone: '',
+                password: ""
+            }
+        }
+    })
+
+</script>
+</body>
+</html>

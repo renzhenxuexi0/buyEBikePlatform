@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Evform</title>
+    <style>
+        #Evform{
+            display: flex;
+            justify-content: center;
+            align-content: center;
+        }
+    </style>
+</head>
+<body>
+<div id="Evform">
+    <el-form ref="form"  label-width="80px">
+        <el-form-item label="名称">
+            <span>{{ev.name}}</span>
+        </el-form-item>
+        <el-form-item label="品牌">
+            <span>{{ev.brand}}</span>
+        </el-form-item>
+        <el-form-item label="型号">
+            <span>{{ev.model}}</span>
+        </el-form-item>
+        <el-form-item label="商家电话">
+            <span>{{business.phone}}</span>
+        </el-form-item>
+        <el-form-item label="商家地址">
+            <span>{{business.address}}</span>
+        </el-form-item>
+        <el-form-item label="支付方式">
+            <el-switch
+                    active-text="正常支付"
+                    inactive-text="以旧换新"
+                    active-value=0
+                    inactive-value=1
+                    v-model="payingSign"
+            >
+            </el-switch>
+        </el-form-item>
+        <el-form-item>
+            <el-button type="primary" @click="buy">购买</el-button>
+            <el-button @click="cancel">取消</el-button>
+        </el-form-item>
+    </el-form>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<!-- 引入样式 -->
+<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+<!-- 引入组件库 -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
+<script>
+    axios.default.baseURL="http://localhost:8080"
+    new Vue({
+        el: "#Evform",
+        data: {
+            ev:{
+
+            },
+            business:{
+
+            },
+            payingSign:0,
+            userId: null,
+        },
+        methods: {
+            buy() {
+
+                const indent = {
+                    "evId":this.ev.id,
+                    "payingSign":this.payingSign,
+                    "userId":this.userId
+                }
+                axios.post("/indent/add",indent).then((res)=>{
+                    if(res.data){
+                        this.$message({
+                            message: '请等待商家联系！',
+                            type: 'success'
+                        });
+                        setTimeout(()=>{
+                            window.location.href = "http://localhost:8080/EBshop/src/main.html";
+                        },3000)
+
+                    }else {
+                        this.$message.error('购买失败！');
+                    }
+                })
+
+            },
+
+            cancel() {
+                window.location.href = "http://localhost:8080/EBshop/src/main.html";
+            }
+        },
+        created(){
+            if(Cookies.get("userId")!=null){
+                this.userId=Cookies.get("userId");
+            }
+            const ev_id = Cookies.get("ev_id");
+            axios.get("/ev/id/"+ev_id).then((res)=>{
+                this.ev=res.data;
+                console.log(this.ev)
+            })
+            axios.get("/business/id/"+ev.businessId).then((res)=>{
+                this.ev=res.data;
+                console.log(this.ev)
+            })
+        }
+    })
+
+</script>
+</body>
+</html>

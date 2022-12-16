@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+  <link href="../css/Register.css" rel="stylesheet" style="text:css"/>
+</head>
+<body>
+
+<div id="RegisterData">
+  <h1>欢迎来到电动车以旧换新网站！</h1><br>
+  <el-form ref="user" :model="user" label-width="80px" label-height="80px" id="RegisterFrom">
+    <el-form-item label="用户名" >
+      <el-input placeholder="请输入用户名" maxlength="10" v-model="user.username" id="username" class="userInput" style="width: 70%"
+                suffix-icon="el-icon-user" show-word-limit @blur="show"></el-input>
+      <br>
+      <span id="username_err" ref="username_err"  class="err_msg" style="display: none">用户名已存在</span>
+    </el-form-item>
+    <el-form-item label="电话" >
+      <el-input placeholder="请输入电话" maxlength="11" v-model="user.phone" id="userphone" class="userInput" style="width: 70%"
+                suffix-icon="el-icon-phone-outline" @blur="show1"></el-input>
+      <br>
+      <span id="userphone_err"  class="err_msg" style="display: none">电话已存在</span>
+    </el-form-item>
+      <el-form-item label="密码">
+        <el-input placeholder="请输入6-12密码" maxlength="12" v-model="user.password" id="userpassword" class="userInput" style="width: 70%"
+                  suffix-icon="el-icon-goods" show-word-limit></el-input>
+      </el-form-item>
+    <el-form-item label="地址">
+      <el-input type="textarea" :rows="2" placeholder="请输入地址" maxlength="100"v-model="user.address" id="useraddress" class="userInput" style="width: 70%"
+                suffix-icon="el-icon-s-home" show-word-limit> </el-input>
+    </el-form-item>
+    <el-form-item>
+      <el-button type="primary" @click="onRegister">注册</el-button>
+        <el-link type="info" href="http://localhost:8080/EBshop/src/Login.html">已有账号？立即登录！</el-link>
+    </el-form-item>
+  </el-form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<!-- 引入样式 -->
+<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+<!-- 引入组件库 -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script>
+
+  axios.default.baseURL="http://localhost:8080"
+
+  new Vue({
+    el:"#RegisterData",
+    methods:{
+      show(){
+        var flag;
+      axios.get("/user/username/"+this.user.username)
+              .then(res=>{
+                console.log(res.data)
+                if(res.data==true){
+                  document.getElementById("username_err").style.color = 'red';
+                  document.getElementById("username_err").style.display=""
+                }else {
+                  document.getElementById("username_err").style.color = 'red';
+                  document.getElementById("username_err").style.display="none"
+                  flag=true;
+                }
+
+              })
+        return flag;
+      },
+      show1(){
+        var flag;
+        axios.get("/user/phone/"+this.user.phone).then(res=>{
+          if(res.data==true){
+            document.getElementById("userphone_err").style.color='red';
+            document.getElementById("userphone_err").style.display='';
+          }else {
+            document.getElementById("userphone_err").style.color='red';
+            document.getElementById("userphone_err").style.display='none';
+            flag=true;
+          }
+
+        })
+
+        return flag
+      },
+      onRegister() {
+        console.log(this.user)
+        axios.post('/user/add',this.user).then(res=>{
+          if(!this.show()&&!this.show1()&&res.data==true&&this.user.phone.length==11&&this.user.password.length>=6){
+            window.location.href="http://localhost:8080/EBshop/src/Login.html"
+          }else {
+            alert(注册失败)
+          }
+        }).catch(err=>{
+          alert("请求超时")
+        })
+      }
+    },
+    data:{
+
+        user:{
+          username:"",
+          phone:"",
+          password:"",
+          address:""
+        },
+        username_err:"",
+        userphone_err:""
+
+    },
+  })
+</script>
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>主界面</title>
+    <link href="../css/main.css" rel="stylesheet" style="text:css"/>
+</head>
+<body>
+<div id="main">
+    <div class="main_top_text">
+        <el-row id="main_top_from">
+
+            <el-col>
+                <el-dropdown v-show="flag">
+                    <span>
+                    {{user.username}}<i class="el-icon-arrow-down el-icon--right"></i>
+                    </span>
+                    <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item @click.native="breakLogin">注销</el-dropdown-item>
+                    </el-dropdown-menu>
+                </el-dropdown>
+
+            </el-col>
+            <el-col><a href="http://localhost:8080/EBshop/src/Login.html" id="loginLink">登录</a></el-col>
+            <el-col><a href="http://localhost:8080/EBshop/src/Register.html" id="registerLink">注册</a></el-col>
+
+        </el-row>
+    </div>
+
+    <div id="search">
+        <tr class="searchInput">
+            <td><input type="text" id="searchText" v-model="searchText" placeholder="请输入电动车名称">
+                <el-button type="success" @click="search">搜索</el-button>
+            </td>
+        </tr>
+    </div>
+    <div id="EV">
+        <div id="showImage" v-for="col in rowEvData">
+            <el-row style="padding: 20px">
+                <el-col :span="6" v-for="ev in col">
+                    <el-card :body-style="{ padding: '0px' }" style="max-height: 450px;max-width: 400px;">
+                        <img src="../image/EV.png" class="image" width="400px" height="400px">
+                        <div style="padding: 5px;  display: flex;text-align: center;">
+                            <el-link :underline="false" style="margin: auto; " @click="onBuy(ev)">{{ev.name}}</el-link>
+                        </div>
+                    </el-card>
+                </el-col>
+            </el-row>
+
+        </div>
+        <el-pagination
+                background
+                layout="prev, pager, next"
+                :total="total"
+                @current-change="handleCurrentChange"
+                :current-page.sync="currentPage"
+                :page-size="page_size"
+                style="padding: 100px">
+        </el-pagination>
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<!-- 引入样式 -->
+<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+<!-- 引入组件库 -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
+<script>
+    axios.default.baseURL = "http://localhost:8080";
+    let a = []
+    new Vue({
+        el: "#main",
+        data: {
+            page_size: 8,
+            total: 0,
+            searchText: '',
+            currentPage: 0,
+            rowEvData: [],
+            user: {
+                id: null,
+                username: null,
+                address: null,
+                phone: null,
+            },
+            flag: false
+        },
+        methods: {
+            search() {
+                this.currentPage = 1;
+                this.rowEvData = []
+                axios.get("/ev/page?name=" + this.searchText + "&page=" + (this.currentPage - 1) + "&size=8").then((res) => {
+                    this.total = res.data.totalElements;
+                    for (let i = 1; i <= res.data.content.length; i++) {
+                        a.push(res.data.content[i - 1])
+                        if (i % 4 == 0) {
+                            this.rowEvData.push(a)
+                            a = [];
+                        }
+                    }
+                })
+            },
+            breakLogin() {
+
+                Cookies.remove("userId", {path: ''})
+                Cookies.remove("userPhone", {path: ''})
+                Cookies.remove("userAddress", {path: ''})
+                Cookies.remove("username", {path: ''})
+                location.reload(true);
+            },
+            onBuy(ev) {
+                if (this.user.id != null) {
+                    Cookies.set("ev_id", ev.id, {expires: 1});
+                    window.location.href = "http://localhost:8080/EBshop/src/Evform.html"
+                } else {
+                    this.$notify({
+                        title: '警告',
+                        message: '请您先登录！',
+                        type: 'warning'
+                    });
+                    setTimeout(function () {
+                        window.location.href = "http://localhost:8080/EBshop/src/Login.html"
+                    }, 3000)
+
+                }
+
+            },
+            getAll(page) {
+                axios.get("/ev/page?page=" + page + "&size=8").then((res) => {
+                    this.total = res.data.totalElements;
+                    for (let i = 1; i <= res.data.content.length; i++) {
+                        a.push(res.data.content[i - 1])
+                        if (i % 4 == 0) {
+                            this.rowEvData.push(a)
+                            a = [];
+                        }
+                    }
+                });
+
+            },
+
+
+            handleCurrentChange(val) {
+                this.currentPage = val;
+                this.rowEvData = []
+                this.getAll(this.currentPage - 1)
+            }
+        },
+
+        created() {
+            console.log(Cookies.get("userId"))
+
+            this.getAll(this.currentPage - 1)
+            if (Cookies.get("userId") != null) {
+                this.user.id = Cookies.get("userId")
+                this.user.username = Cookies.get("username")
+                this.user.address = Cookies.get("userAddress")
+                this.user.phone = Cookies.get("userPhone")
+                document.getElementById("loginLink").style.display = "none"
+                document.getElementById("registerLink").style.display = "none"
+                this.flag = true
+            } else {
+                document.getElementById("loginLink").style.display = ""
+                document.getElementById("registerLink").style.display = ""
+                this.flag = false
+            }
+
+        }
+    })
+
+
+</script>
+</body>
+</html>
