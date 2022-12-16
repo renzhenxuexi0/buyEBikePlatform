@@ -27,7 +27,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/**").addResourceLocations("file:E:/EvImage");
+        registry.addResourceHandler("E:/EvImage").addResourceLocations("file:E:/EvImage");
         WebMvcConfigurer.super.addResourceHandlers(registry);
     }
 }
