@@ -68,3 +68,5 @@ mybatis:
   mapper-locations: classpath:mapper/*.xml
   #标注实体类位置
   type-aliases-package: com.softwareEngineering.electrocar.entity
+server:
+  max-http-header-size: 1024000
