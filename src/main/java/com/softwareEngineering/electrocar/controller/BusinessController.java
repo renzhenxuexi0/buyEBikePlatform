@@ -83,7 +83,7 @@ public class BusinessController {
      * @return 新增结果
      */
     @PostMapping("/add")
-    public ResponseEntity<Business> add(Business business) {
+    public ResponseEntity<Business> add(@RequestBody Business business) {
         return ResponseEntity.ok(this.businessService.insert(business));
     }
 
@@ -94,7 +94,7 @@ public class BusinessController {
      * @return 编辑结果
      */
     @PutMapping
-    public ResponseEntity<Business> edit(Business business) {
+    public ResponseEntity<Business> edit(@RequestBody Business business) {
         return ResponseEntity.ok(this.businessService.update(business));
     }
 

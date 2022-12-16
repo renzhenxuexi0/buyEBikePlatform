@@ -49,7 +49,7 @@ public class IndentController {
      * @return 新增结果
      */
     @PostMapping("/add")
-    public ResponseEntity<Boolean> add(Indent indent) {
+    public ResponseEntity<Boolean> add(@RequestBody Indent indent) {
         return ResponseEntity.ok(this.indentService.insert(indent));
     }
 
@@ -60,7 +60,7 @@ public class IndentController {
      * @return 编辑结果
      */
     @PutMapping("/edit")
-    public ResponseEntity<Boolean> edit(Indent indent) {
+    public ResponseEntity<Boolean> edit(@RequestBody Indent indent) {
         System.out.println(indent);
         return ResponseEntity.ok(this.indentService.update(indent));
     }

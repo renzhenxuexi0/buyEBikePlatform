@@ -59,7 +59,7 @@ public class EvController {
      * @return 新增是否成功
      */
     @PostMapping("/add")
-    public ResponseEntity<Boolean> add(Ev ev) {
+    public ResponseEntity<Boolean> add(@RequestBody Ev ev) {
         return ResponseEntity.ok(this.evService.insert(ev));
     }
 
@@ -87,7 +87,7 @@ public class EvController {
      * @return 编辑是否成功
      */
     @PutMapping
-    public ResponseEntity<Boolean> edit(Ev ev) {
+    public ResponseEntity<Boolean> edit(@RequestBody Ev ev) {
         return ResponseEntity.ok(this.evService.update(ev));
     }
 
