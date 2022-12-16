@@ -93,6 +93,7 @@ public class UserController {
      */
     @PostMapping
     public ResponseEntity<Boolean> add(User user) {
+        System.out.println(user);
         return ResponseEntity.ok(this.userService.insert(user));
     }
 
