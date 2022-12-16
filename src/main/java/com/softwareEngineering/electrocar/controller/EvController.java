@@ -46,6 +46,12 @@ public class EvController {
         return ResponseEntity.ok(this.evService.queryById(id));
     }
 
+    @GetMapping("/deleteImage/{path}")
+    public ResponseEntity<String> deleteImage(@PathVariable("path") String path) {
+        String s = PicUtil.deFile(path);
+        return ResponseEntity.status(HttpStatus.OK).body(s);
+    }
+
     /**
      * 新增数据
      *

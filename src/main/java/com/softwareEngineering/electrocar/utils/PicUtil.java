@@ -55,9 +55,6 @@ public class PicUtil {
         String resultInfo = null;
         Map<String, Object> modelMap = new HashMap<String, Object>();
 
-        // String sb =area.getAreaName();;
-        // sb.replace("/","\\");
-        //String sb1 = "F:\\photos\\蛇皮玩意儿\\123\\瞎把.jpg";
         File file = new File(path);
         if (file.exists()) {
             if (file.delete()) {
