@@ -24,10 +24,4 @@ public class WebConfig implements WebMvcConfigurer {
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
         argumentResolvers.add(pageRequestHandlerMethodArgumentResolver);
     }
-
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("E:/EvImage").addResourceLocations("file:E:/EvImage");
-        WebMvcConfigurer.super.addResourceHandlers(registry);
-    }
 }
