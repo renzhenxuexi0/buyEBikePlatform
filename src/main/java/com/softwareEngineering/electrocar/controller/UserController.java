@@ -74,16 +74,14 @@ public class UserController {
      * @return 是否存在
      */
     @GetMapping("{phone}/{password}")
-    public ResponseEntity<Boolean> queryByPhone(@PathVariable("phone") String phone,
-                                                @PathVariable("password") String password,
-                                                HttpSession session) {
+    public ResponseEntity<User> queryByPhone(@PathVariable("phone") String phone,
+                                             @PathVariable("password") String password,
+                                             HttpSession session) {
         User user = this.userService.queryByPhoneAndPassword(phone, password);
         if (user != null) {
             session.setAttribute("loginUser", user);
-            return ResponseEntity.ok(true);
-        } else {
-            return ResponseEntity.ok(false);
         }
+        return ResponseEntity.ok(user);
     }
 
     /**

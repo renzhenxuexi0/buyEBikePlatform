@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>后台管理</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+
+    <!-- 引入样式 -->
+    <style>
+        #business_background {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .bg-container {
+            height: 100%;
+        }
+
+        .bg-header {
+
+            /* 字体样式 */
+            line-height: 1.5em;
+            font-weight: bold;
+            font-size: 30px;
+            color: #def;
+            text-shadow: 0 0 1px currentColor, -1px -1px 1px #000, 0 -1px 1px #000, 1px -1px 1px #000, 1px 0 1px #000, 1px 1px 1px #000, 0 1px 1px #000, -1px 1px 1px #000, -1px 0 1px #000;
+            -webkit-filter: url(#diff1);
+            filter: url(#diff1); /*background:#def;padding:0 .2em*/
+        }
+
+        * { /* CSS Reset */
+            margin: 0;
+            padding: 0;
+        }
+
+        .bg-aside {
+            height: 100%;
+        }
+
+        .bg-main {
+            height: 100%;
+        }
+    </style>
+    <link href="https://unpkg.com/element-ui/lib/theme-chalk/index.css" rel="stylesheet">
+</head>
+<body>
+<div id="business_background">
+    <el-container class="bg-container">
+        <el-header class="bg-header">后台管理</el-header>
+        <el-container>
+            <el-aside class="bg-aside">
+                <el-menu
+                        class="bg-menu"
+                        default-active="1"
+                        menu-trigger="click"
+                        router
+                >
+                    <el-menu-item index="/allElectrocar"><i class="el-icon-goods"></i><span>管理商品</span>
+                    </el-menu-item>
+                    <el-menu-item index="/allIndent"><i class="el-icon-star-off"></i><span>查看管理订单</span>
+                    </el-menu-item>
+                </el-menu>
+            </el-aside>
+            <el-main class="bg-main">
+                <router-view></router-view>
+            </el-main>
+        </el-container>
+    </el-container>
+</div>
+</body>
+
+<!-- 引入组件库 -->
+<script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+<script src="https://unpkg.com/vue-router@3/dist/vue-router.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+<script>
+
+
+    Vue.use(VueRouter);
+
+    const allElectrocar = {
+        template: '<iframe src = "all-electrocar.html" style="width: 100%;height: 100%;border:none"></iframe>'
+    };
+    const allIndent = {
+        template: '<iframe src = "all-indent.html" style="width: 100%;height: 100%;border:none"></iframe>'
+    };
+
+    const routes = [
+        {
+            name: 'allElectrocar',
+            path: '/allElectrocar',
+            component: allElectrocar
+        },
+        {
+            name: 'allOrder',
+            path: '/allOrder',
+            component: allIndent
+        }
+    ];
+
+    const vueRouter = new VueRouter({
+        //配置路由
+        routes: routes,
+        mode: 'hash'
+    });
+
+
+    const vue = new Vue({
+        el: "#business_background",
+        router: vueRouter,
+        data: {},
+        methods: {},
+        created() {
+        },
+    })
+</script>
+</html>
