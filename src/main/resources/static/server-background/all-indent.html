@@ -29,7 +29,7 @@
                 prop="evId">
         </el-table-column>
         <el-table-column
-                label="支付方式"
+                label="订单状态"
                 prop="payingSign">
         </el-table-column>
     </el-table>
@@ -64,7 +64,7 @@
         },
         methods: {
             getAll(page, size) {
-                axios.get("/page/indent?page=" + page + "&size=" + size).then((res) => {
+                axios.get("/indent/page?page=" + page + "&size=" + size).then((res) => {
                     this.total = res.data.totalElements;
                     this.tableData = res.data.content;
                 });

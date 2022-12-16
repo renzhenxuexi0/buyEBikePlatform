@@ -44,7 +44,7 @@ public class IndentServiceImpl implements IndentService {
      * 新增数据
      *
      * @param indent 实例对象
-     * @return 实例对象
+     * @return 是否成功
      */
     @Override
     public Boolean insert(Indent indent) {
@@ -55,12 +55,11 @@ public class IndentServiceImpl implements IndentService {
      * 修改数据
      *
      * @param indent 实例对象
-     * @return 实例对象
+     * @return 是否成功
      */
     @Override
-    public Indent update(Indent indent) {
-        this.indentDao.update(indent);
-        return this.queryById(indent.getId());
+    public Boolean update(Indent indent) {
+        return this.indentDao.update(indent) > 0;
     }
 
     /**

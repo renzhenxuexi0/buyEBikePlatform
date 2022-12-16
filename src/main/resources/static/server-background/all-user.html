@@ -92,12 +92,12 @@
         methods: {
             getAll(page, size) {
                 if (this.username !== '') {
-                    axios.get("/page/user?page=" + page + "&size=" + size + "&username=" + this.username).then((res) => {
+                    axios.get("/user/page?page=" + page + "&size=" + size + "&username=" + this.username).then((res) => {
                         this.total = res.data.totalElements;
                         this.tableData = res.data.content;
                     });
                 } else {
-                    axios.get("/page/user?page=" + page + "&size=" + size).then((res) => {
+                    axios.get("/user/page?page=" + page + "&size=" + size).then((res) => {
                         this.total = res.data.totalElements;
                         this.tableData = res.data.content;
                     });
