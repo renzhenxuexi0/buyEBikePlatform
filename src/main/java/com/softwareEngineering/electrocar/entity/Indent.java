@@ -18,7 +18,7 @@ public class Indent implements Serializable {
      */
     private Integer evId;
     /**
-     * 是否已经付款
+     * 支付方式
      */
     private Integer payingSign;
     /**

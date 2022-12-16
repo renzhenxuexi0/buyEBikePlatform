@@ -70,6 +70,13 @@
             <optional>true</optional>
         </dependency>
 
+        <!--图片压缩工具-->
+        <dependency>
+            <groupId>net.coobird</groupId>
+            <artifactId>thumbnailator</artifactId>
+            <version>0.4.8</version>
+        </dependency>
+
         <!-- 引入 jpa 依赖 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -2,12 +2,16 @@ package com.softwareEngineering.electrocar.controller;
 
 import com.softwareEngineering.electrocar.entity.Ev;
 import com.softwareEngineering.electrocar.service.EvService;
+import com.softwareEngineering.electrocar.utils.PicUtil;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 
 
 @RestController
@@ -51,6 +55,22 @@ public class EvController {
     @PostMapping("/add")
     public ResponseEntity<Ev> add(Ev ev) {
         return ResponseEntity.ok(this.evService.insert(ev));
+    }
+
+    /**
+     * 上传图片
+     *
+     * @param File 图片文件
+     * @return 返回是否成功的信息
+     */
+    @PostMapping("/uploadingImage")
+    public ResponseEntity<String> uploadingImage(MultipartFile File) {
+        try {
+            String s = PicUtil.singleFileUpload(File);
+            return ResponseEntity.status(HttpStatus.OK).body(s);
+        } catch (IOException e) {
+            return ResponseEntity.ok("服务器异常");
+        }
     }
 
     /**
