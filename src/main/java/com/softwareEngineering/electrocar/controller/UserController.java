@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
@@ -27,7 +29,7 @@ public class UserController {
      * @param pageRequest 分页对象
      * @return 查询结果
      */
-    @GetMapping
+    @GetMapping("page")
     public ResponseEntity<Page<User>> queryByPage(User user, PageRequest pageRequest) {
         return ResponseEntity.ok(this.userService.queryByPage(user, pageRequest));
     }
@@ -38,7 +40,7 @@ public class UserController {
      * @param id 主键
      * @return 单条数据
      */
-    @GetMapping("{id}")
+    @GetMapping("/id/{id}")
     public ResponseEntity<User> queryById(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(this.userService.queryById(id));
     }
@@ -49,8 +51,9 @@ public class UserController {
      * @param username 用户名
      * @return 是否存在
      */
-    @GetMapping("{username}")
+    @GetMapping("/username/{username}")
     public ResponseEntity<Boolean> queryByUsername(@PathVariable("username") String username) {
+        System.out.println(username);
         return ResponseEntity.ok(this.userService.queryByUsername(username));
     }
 
@@ -60,8 +63,9 @@ public class UserController {
      * @param phone 手机号
      * @return 是否存在
      */
-    @GetMapping("{phone}")
+    @GetMapping("/phone/{phone}")
     public ResponseEntity<Boolean> queryByPhone(@PathVariable("phone") String phone) {
+        System.out.println(phone);
         return ResponseEntity.ok(this.userService.queryByPhone(phone));
     }
 
@@ -73,14 +77,13 @@ public class UserController {
      * @param password 密码
      * @return 是否存在
      */
-    @GetMapping("{phone}/{password}")
+    @GetMapping("/phone/{phone}/password/{password}")
     public ResponseEntity<User> queryByPhone(@PathVariable("phone") String phone,
                                              @PathVariable("password") String password,
-                                             HttpSession session) {
+                                             HttpServletRequest request, HttpServletResponse response) {
         User user = this.userService.queryByPhoneAndPassword(phone, password);
-        if (user != null) {
-            session.setAttribute("loginUser", user);
-        }
+        HttpSession session = request.getSession();
+        session.setAttribute("loginUser", user);
         return ResponseEntity.ok(user);
     }
 

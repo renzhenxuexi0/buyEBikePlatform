@@ -26,7 +26,7 @@ public class BusinessController {
      * @param pageRequest 分页对象
      * @return 查询结果
      */
-    @GetMapping
+    @GetMapping("/page")
     public ResponseEntity<Page<Business>> queryByPage(Business business, PageRequest pageRequest) {
         return ResponseEntity.ok(this.businessService.queryByPage(business, pageRequest));
     }

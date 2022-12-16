@@ -26,6 +26,10 @@ public class Business implements Serializable {
      */
     private String password;
     /**
+     * 商家手机号
+     */
+    private String phone;
+    /**
      * 商铺地址
      */
     private String address;

@@ -7,6 +7,7 @@
         <result property="brand" column="brand" jdbcType="VARCHAR"/>
         <result property="account" column="account" jdbcType="VARCHAR"/>
         <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
         <result property="address" column="address" jdbcType="VARCHAR"/>
         <result property="entrySign" column="entry_sign" jdbcType="INTEGER"/>
     </resultMap>
@@ -17,6 +18,7 @@
                brand,
                account,
                password,
+               phone,
                address,
                entry_sign
         from business
@@ -26,7 +28,7 @@
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="BusinessMap">
         select
-        id, brand, account, password, entry_sign
+        id, brand, account, password,phone, entry_sign
         from business
         <where>
             <if test="business.id != null">
@@ -40,6 +42,9 @@
             </if>
             <if test="business.password != null and business.password != ''">
                 and password = #{business.password}
+            </if>
+            <if test="business.phone != null and business.phone != ''">
+                and phone = #{business.phone}
             </if>
             <if test="business.address != null and business.address != ''">
                 and address = #{business.address}
@@ -68,6 +73,9 @@
             <if test="password != null and password != ''">
                 and password = #{password}
             </if>
+            <if test="phone != null and phone != ''">
+                and phone = #{phone}
+            </if>
             <if test="address != null and address != ''">
                 and address = #{address}
             </if>
@@ -79,28 +87,31 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into business(brand, account, password, address, entry_sign)
-        values (#{brand}, #{account}, #{password}, #{address}, #{entrySign})
+        insert into business(brand, account, password, phone, address, entry_sign)
+        values (#{brand}, #{account}, #{password}, #{phone}, #{address}, #{entrySign})
     </insert>
 
     <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
-        insert into business(brand, account, password, address, entry_sign)
+        insert into business(brand, account, password, phone, address, entry_sign)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.brand}, #{entity.account}, #{entity.password}, #{entity.address}, #{entity.entrySign})
+            (#{entity.brand}, #{entity.account}, #{entity.password}, #{entity.phone}, #{entity.address},
+            #{entity.entrySign})
         </foreach>
     </insert>
 
     <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
-        insert into business(brand, account, password, address, entry_sign)
+        insert into business(brand, account, password, phone, address, entry_sign)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.brand}, #{entity.account}, #{entity.password}, #{entity.address}, #{entity.entrySign})
+            (#{entity.brand}, #{entity.account}, #{entity.password}, #{entity.phone}, #{entity.address},
+            #{entity.entrySign})
         </foreach>
         on duplicate key update
         brand = values(brand),
         account = values(account),
         password = values(password),
+        phone = values(phone),
         address = values(address),
         entry_sign = values(entry_sign)
     </insert>
@@ -117,6 +128,9 @@
             </if>
             <if test="password != null and password != ''">
                 password = #{password},
+            </if>
+            <if test="phone != null and phone != ''">
+                phone = #{phone},
             </if>
             <if test="address != null and address != ''">
                 address = #{address},

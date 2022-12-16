@@ -26,7 +26,7 @@ public class IndentController {
      * @param pageRequest 分页对象
      * @return 查询结果
      */
-    @GetMapping
+    @GetMapping("/page")
     public ResponseEntity<Page<Indent>> queryByPage(Indent indent, PageRequest pageRequest) {
         return ResponseEntity.ok(this.indentService.queryByPage(indent, pageRequest));
     }

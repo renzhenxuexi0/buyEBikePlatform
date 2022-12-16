@@ -97,12 +97,12 @@
         methods: {
             getAll(page, size) {
                 if (this.brand !== '') {
-                    axios.get("/business?page=" + page + "&size=" + size + "&brand=" + this.brand).then((res) => {
+                    axios.get("/page/business?page=" + page + "&size=" + size + "&brand=" + this.brand).then((res) => {
                         this.total = res.data.totalElements;
                         this.tableData = res.data.content;
                     });
                 } else {
-                    axios.get("/business?page=" + page + "&size=" + size).then((res) => {
+                    axios.get("/page/business?page=" + page + "&size=" + size).then((res) => {
                         this.total = res.data.totalElements;
                         this.tableData = res.data.content;
                     });

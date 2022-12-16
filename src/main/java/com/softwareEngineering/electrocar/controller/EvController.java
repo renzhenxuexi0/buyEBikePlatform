@@ -26,7 +26,7 @@ public class EvController {
      * @param pageRequest 分页对象
      * @return 查询结果
      */
-    @GetMapping
+    @GetMapping("/page")
     public ResponseEntity<Page<Ev>> queryByPage(Ev ev, PageRequest pageRequest) {
         return ResponseEntity.ok(this.evService.queryByPage(ev, pageRequest));
     }
