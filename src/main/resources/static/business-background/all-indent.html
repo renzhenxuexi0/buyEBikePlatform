@@ -87,7 +87,8 @@
             handle(index, row) {
                 if (row.payingSign==0){
                     row.payingSign =2
-                    axios.put("/indent",row).then((res)=>{
+                    axios.put("/indent/edit",row).then((res)=>{
+                        console.log(row)
                         if (res.data==true){
                             this.$message({
                                 message: '处理成功',
@@ -100,7 +101,7 @@
                     })
                 }else if(row.payingSign==1){
                     row.payingSign=3
-                    axios.put("/indent",row).then((res)=>{
+                    axios.put("/indent/edit",row).then((res)=>{
                         if (res.data==true){
                             this.$message({
                                 message: '处理成功',
@@ -117,7 +118,7 @@
             handleDelete(index, row) {
                 if (row.payingSign==0){
                     row.payingSign =4
-                    axios.put("/indent",row).then((res)=>{
+                    axios.put("/indent/edit",row).then((res)=>{
                         if (res.data==true){
                             this.$message({
                                 message: '拒绝成功',
@@ -130,7 +131,7 @@
                     })
                 }else if(row.payingSign==1){
                     row.payingSign=5
-                    axios.put("/indent",row).then((res)=>{
+                    axios.put("/indent/edit",row).then((res)=>{
                         if (res.data==true){
                             this.$message({
                                 message: '拒绝成功',

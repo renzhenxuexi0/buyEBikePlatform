@@ -59,8 +59,9 @@ public class IndentController {
      * @param indent 实体
      * @return 编辑结果
      */
-    @PutMapping
+    @PutMapping("/edit")
     public ResponseEntity<Boolean> edit(Indent indent) {
+        System.out.println(indent);
         return ResponseEntity.ok(this.indentService.update(indent));
     }
 
