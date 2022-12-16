@@ -97,8 +97,8 @@ public class EvController {
      * @param id 主键
      * @return 删除是否成功
      */
-    @DeleteMapping
-    public ResponseEntity<Boolean> deleteById(Integer id) {
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Boolean> deleteById(@PathVariable Integer id) {
         return ResponseEntity.ok(this.evService.deleteById(id));
     }
 
