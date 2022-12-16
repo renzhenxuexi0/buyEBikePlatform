@@ -1,6 +1,7 @@
 package com.softwareEngineering.electrocar.service;
 
 import com.softwareEngineering.electrocar.entity.Business;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +26,32 @@ public interface BusinessService {
      * @return 查询结果
      */
     Page<Business> queryByPage(Business business, PageRequest pageRequest);
+
+    /**
+     * 通过品牌名查找商家
+     *
+     * @param brand 品牌名
+     * @return 实例对象
+     */
+    Boolean queryByBrand(String brand);
+
+    /**
+     * 通过手机号查找商家
+     *
+     * @param phone 手机号
+     * @return 实例对象
+     */
+    Boolean queryByPhone(String phone);
+
+
+    /**
+     * 通过账号和密码查找商家
+     *
+     * @param account  账号
+     * @param password 密码
+     * @return 实例对象
+     */
+    Business queryByAccountAndPassword(String account, String password);
 
     /**
      * 新增数据

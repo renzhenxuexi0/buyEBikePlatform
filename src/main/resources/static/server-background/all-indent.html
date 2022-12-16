@@ -7,22 +7,12 @@
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
     <link href="https://unpkg.com/element-ui/lib/theme-chalk/index.css" rel="stylesheet">
-    <style>
-        .el-table .warning-row {
-            background: oldlace;
-        }
-
-        .el-table .success-row {
-            background: #f0f9eb;
-        }
-    </style>
 
 </head>
 <body>
 <div id="all_indent">
     <el-table
             :data="tableData"
-            :row-class-name="tableRowClassName"
             style="width: 100%">
         <el-table-column
                 label="序列"
@@ -78,14 +68,6 @@
                     this.total = res.data.totalElements;
                     this.tableData = res.data.content;
                 });
-            },
-            tableRowClassName({row, rowIndex}) {
-                if (rowIndex === 1) {
-                    return 'warning-row';
-                } else if (rowIndex === 3) {
-                    return 'success-row';
-                }
-                return '';
             },
             handleSizeChange(val) {
                 this.pageSize = val;

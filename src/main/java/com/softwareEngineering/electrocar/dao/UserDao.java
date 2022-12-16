@@ -33,7 +33,7 @@ public interface UserDao {
      * @param username 用户名
      * @return 实例对象
      */
-    User queryByUsername(String username);
+    User queryByUsername(@Param("username") String username);
 
     /**
      * 通过手机号查找用户
@@ -41,7 +41,7 @@ public interface UserDao {
      * @param phone 手机号
      * @return 实例对象
      */
-    User queryByPhone(String phone);
+    User queryByPhone(@Param("phone") String phone);
 
 
     /**
@@ -51,7 +51,7 @@ public interface UserDao {
      * @param password 密码
      * @return 实例对象
      */
-    User queryByPhoneAndPassword(String phone, String password);
+    User queryByPhoneAndPassword(@Param("phone") String phone, @Param("password") String password);
 
     /**
      * 统计总行数

@@ -31,7 +31,7 @@ public interface IndentService {
      * @param indent 实例对象
      * @return 实例对象
      */
-    Indent insert(Indent indent);
+    Boolean insert(Indent indent);
 
     /**
      * 修改数据

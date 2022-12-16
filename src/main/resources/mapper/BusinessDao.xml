@@ -84,6 +84,24 @@
             </if>
         </where>
     </select>
+    <select id="queryByBrand" resultType="com.softwareEngineering.electrocar.entity.Business"
+            parameterType="java.lang.String">
+        select id, brand, account, password, phone, entry_sign
+        from business
+        where brand = #{brand}
+    </select>
+    <select id="queryByPhone" resultType="com.softwareEngineering.electrocar.entity.Business"
+            parameterType="java.lang.String">
+        select id, brand, account, password, phone, entry_sign
+        from business
+        where phone = #{phone}
+    </select>
+    <select id="queryByAccountAndPassword" resultType="com.softwareEngineering.electrocar.entity.Business">
+        select id, brand, account, password, phone, entry_sign
+        from business
+        where account = #{account}
+          and password = #{password}
+    </select>
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">

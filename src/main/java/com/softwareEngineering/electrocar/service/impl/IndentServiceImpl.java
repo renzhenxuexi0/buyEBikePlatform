@@ -47,9 +47,8 @@ public class IndentServiceImpl implements IndentService {
      * @return 实例对象
      */
     @Override
-    public Indent insert(Indent indent) {
-        this.indentDao.insert(indent);
-        return indent;
+    public Boolean insert(Indent indent) {
+        return this.indentDao.insert(indent) > 0;
     }
 
     /**

@@ -3,6 +3,7 @@ package com.softwareEngineering.electrocar.service.impl;
 import com.softwareEngineering.electrocar.dao.BusinessDao;
 import com.softwareEngineering.electrocar.entity.Business;
 import com.softwareEngineering.electrocar.service.BusinessService;
+import com.softwareEngineering.electrocar.utils.RandomStringUtil;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -41,6 +42,40 @@ public class BusinessServiceImpl implements BusinessService {
     }
 
     /**
+     * 通过品牌名查找商家
+     *
+     * @param brand 品牌名
+     * @return 实例对象
+     */
+    @Override
+    public Boolean queryByBrand(String brand) {
+        return businessDao.queryByBrand(brand) != null;
+    }
+
+    /**
+     * 通过手机号查找商家
+     *
+     * @param phone 手机号
+     * @return 实例对象
+     */
+    @Override
+    public Boolean queryByPhone(String phone) {
+        return businessDao.queryByPhone(phone) != null;
+    }
+
+    /**
+     * 通过账号和密码查找商家
+     *
+     * @param account  账号
+     * @param password 密码
+     * @return 实例对象
+     */
+    @Override
+    public Business queryByAccountAndPassword(String account, String password) {
+        return businessDao.queryByAccountAndPassword(account, password);
+    }
+
+    /**
      * 新增数据
      *
      * @param business 实例对象
@@ -48,6 +83,7 @@ public class BusinessServiceImpl implements BusinessService {
      */
     @Override
     public Business insert(Business business) {
+        business.setAccount(RandomStringUtil.randomString(8));
         this.businessDao.insert(business);
         return business;
     }

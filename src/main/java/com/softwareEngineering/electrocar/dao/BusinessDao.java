@@ -28,6 +28,32 @@ public interface BusinessDao {
     List<Business> queryAllByLimit(Business business, @Param("pageable") Pageable pageable);
 
     /**
+     * 通过品牌名查找商家
+     *
+     * @param brand 品牌名
+     * @return 实例对象
+     */
+    Business queryByBrand(@Param("brand") String brand);
+
+    /**
+     * 通过手机号查找商家
+     *
+     * @param phone 手机号
+     * @return 实例对象
+     */
+    Business queryByPhone(@Param("phone") String phone);
+
+
+    /**
+     * 通过账号和密码查找商家
+     *
+     * @param account  账号
+     * @param password 密码
+     * @return 实例对象
+     */
+    Business queryByAccountAndPassword(@Param("account") String account, @Param("password") String password);
+
+    /**
      * 统计总行数
      *
      * @param business 查询条件

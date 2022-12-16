@@ -43,6 +43,40 @@ public class BusinessController {
     }
 
     /**
+     * 通过品牌名查找商家
+     *
+     * @param brand 品牌名
+     * @return 实例对象
+     */
+    @GetMapping("/brand/{brand}")
+    public ResponseEntity<Boolean> queryByBrand(@PathVariable String brand) {
+        return ResponseEntity.ok(businessService.queryByBrand(brand));
+    }
+
+    /**
+     * 通过手机号查找商家
+     *
+     * @param phone 手机号
+     * @return 实例对象
+     */
+    @GetMapping("/phone/{phone}")
+    public ResponseEntity<Boolean> queryByPhone(@PathVariable String phone) {
+        return ResponseEntity.ok(businessService.queryByPhone(phone));
+    }
+
+    /**
+     * 通过账号和密码查找商家
+     *
+     * @param account  账号
+     * @param password 密码
+     * @return 实例对象
+     */
+    @GetMapping("account/{account}/password/{password}")
+    public ResponseEntity<Business> queryByAccountAndPassword(@PathVariable String account, @PathVariable String password) {
+        return ResponseEntity.ok(businessService.queryByAccountAndPassword(account, password));
+    }
+
+    /**
      * 新增数据
      *
      * @param business 实体
