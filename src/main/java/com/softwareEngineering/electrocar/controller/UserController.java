@@ -53,7 +53,6 @@ public class UserController {
      */
     @GetMapping("/username/{username}")
     public ResponseEntity<Boolean> queryByUsername(@PathVariable("username") String username) {
-        System.out.println(username);
         return ResponseEntity.ok(this.userService.queryByUsername(username));
     }
 
@@ -65,7 +64,6 @@ public class UserController {
      */
     @GetMapping("/phone/{phone}")
     public ResponseEntity<Boolean> queryByPhone(@PathVariable("phone") String phone) {
-        System.out.println(phone);
         return ResponseEntity.ok(this.userService.queryByPhone(phone));
     }
 
