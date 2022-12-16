@@ -35,9 +35,10 @@
                         :on-success="handleAvatarSuccess"
                         :before-upload="beforeAvatarUpload"
                         :file-list="fileList"
-                        list-type="picture"
-                        :on-remove="handleRemove">
-                    <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                        list-type="picture-card"
+                        :on-remove="handleRemove"
+                        limit="1">
+
                     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                 </el-upload>
             </el-form-item>
@@ -89,7 +90,9 @@
         </el-table-column>
         <el-table-column label="图片">
             <template slot-scope="scope">
-                <img src="{{scope.row.image}}" width="150" height="150">
+                <el-image
+                        style="width: 100px; height: 100px"
+                        :src="scope.row.image"></el-image>
             </template>
         </el-table-column>
 
