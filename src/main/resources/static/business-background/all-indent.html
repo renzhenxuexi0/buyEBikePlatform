@@ -110,11 +110,39 @@
                         }else {
                             this.$message.error('处理失败');
                         }
-                }else if (row.payingSign==2)
+                })
 
+            }
             },
             handleDelete(index, row) {
-                console.log(index, row);
+                if (row.payingSign==0){
+                    row.payingSign =4
+                    axios.put("/indent",row).then((res)=>{
+                        if (res.data==true){
+                            this.$message({
+                                message: '拒绝成功',
+                                type: 'success'
+                            });
+                            this.getAll(this.pageSize-1,this.pageSize)
+                        }else {
+                            this.$message.error('拒绝失败');
+                        }
+                    })
+                }else if(row.payingSign==1){
+                    row.payingSign=5
+                    axios.put("/indent",row).then((res)=>{
+                        if (res.data==true){
+                            this.$message({
+                                message: '拒绝成功',
+                                type: 'success'
+                            });
+                            this.getAll(this.pageSize-1,this.pageSize)
+                        }else {
+                            this.$message.error('拒绝失败失败');
+                        }
+                    })
+
+                }
             },
             getAll(page, size) {
                 axios.get("/indent/page?page=" + page + "&size=" + size).then((res) => {
