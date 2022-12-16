@@ -64,8 +64,9 @@ public class EvController {
      * @return 返回是否成功的信息
      */
     @PostMapping("/uploadingImage")
-    public ResponseEntity<String> uploadingImage(MultipartFile File) {
+    public ResponseEntity<String> uploadingImage(@RequestParam("file") MultipartFile File) {
         try {
+            System.out.println(File);
             String s = PicUtil.singleFileUpload(File);
             return ResponseEntity.status(HttpStatus.OK).body(s);
         } catch (IOException e) {
