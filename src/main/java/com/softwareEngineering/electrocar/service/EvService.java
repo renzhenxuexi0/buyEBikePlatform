@@ -29,17 +29,17 @@ public interface EvService {
      * 新增数据
      *
      * @param ev 实例对象
-     * @return 实例对象
+     * @return 是否成功
      */
-    Ev insert(Ev ev);
+    Boolean insert(Ev ev);
 
     /**
      * 修改数据
      *
      * @param ev 实例对象
-     * @return 实例对象
+     * @return 是否成功
      */
-    Ev update(Ev ev);
+    Boolean update(Ev ev);
 
     /**
      * 通过主键删除数据

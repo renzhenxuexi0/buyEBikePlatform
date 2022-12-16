@@ -50,10 +50,10 @@ public class EvController {
      * 新增数据
      *
      * @param ev 实体
-     * @return 新增结果
+     * @return 新增是否成功
      */
     @PostMapping("/add")
-    public ResponseEntity<Ev> add(Ev ev) {
+    public ResponseEntity<Boolean> add(Ev ev) {
         return ResponseEntity.ok(this.evService.insert(ev));
     }
 
@@ -77,10 +77,10 @@ public class EvController {
      * 编辑数据
      *
      * @param ev 实体
-     * @return 编辑结果
+     * @return 编辑是否成功
      */
     @PutMapping
-    public ResponseEntity<Ev> edit(Ev ev) {
+    public ResponseEntity<Boolean> edit(Ev ev) {
         return ResponseEntity.ok(this.evService.update(ev));
     }
 

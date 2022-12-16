@@ -44,24 +44,22 @@ public class EvServiceImpl implements EvService {
      * 新增数据
      *
      * @param ev 实例对象
-     * @return 实例对象
+     * @return 是否成功
      */
     @Override
-    public Ev insert(Ev ev) {
-        this.evDao.insert(ev);
-        return ev;
+    public Boolean insert(Ev ev) {
+        return this.evDao.insert(ev) > 0;
     }
 
     /**
      * 修改数据
      *
      * @param ev 实例对象
-     * @return 实例对象
+     * @return 是否成功
      */
     @Override
-    public Ev update(Ev ev) {
-        this.evDao.update(ev);
-        return this.queryById(ev.getId());
+    public Boolean update(Ev ev) {
+        return this.evDao.update(ev) > 0;
     }
 
     /**
