@@ -91,8 +91,8 @@ public class UserController {
      * @param user 实体
      * @return 新增结果
      */
-    @PostMapping
-    public ResponseEntity<Boolean> add(User user) {
+    @PostMapping("/add")
+    public ResponseEntity<Boolean> add(@RequestBody User user) {
         System.out.println(user);
         return ResponseEntity.ok(this.userService.insert(user));
     }
@@ -104,7 +104,7 @@ public class UserController {
      * @return 编辑结果
      */
     @PutMapping
-    public ResponseEntity<User> edit(User user) {
+    public ResponseEntity<User> edit(@RequestBody User user) {
         return ResponseEntity.ok(this.userService.update(user));
     }
 

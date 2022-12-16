@@ -29,6 +29,5 @@ public class User implements Serializable {
      * 地址
      */
     private String address;
-
 }
 
