@@ -37,7 +37,7 @@ public class BusinessController {
      * @param id 主键
      * @return 单条数据
      */
-    @GetMapping("{id}")
+    @GetMapping("/id/{id}")
     public ResponseEntity<Business> queryById(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(this.businessService.queryById(id));
     }
@@ -48,7 +48,7 @@ public class BusinessController {
      * @param business 实体
      * @return 新增结果
      */
-    @PostMapping
+    @PostMapping("/add")
     public ResponseEntity<Business> add(Business business) {
         return ResponseEntity.ok(this.businessService.insert(business));
     }

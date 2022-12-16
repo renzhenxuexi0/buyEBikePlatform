@@ -37,7 +37,7 @@ public class EvController {
      * @param id 主键
      * @return 单条数据
      */
-    @GetMapping("{id}")
+    @GetMapping("/id/{id}")
     public ResponseEntity<Ev> queryById(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(this.evService.queryById(id));
     }
@@ -48,7 +48,7 @@ public class EvController {
      * @param ev 实体
      * @return 新增结果
      */
-    @PostMapping
+    @PostMapping("/add")
     public ResponseEntity<Ev> add(Ev ev) {
         return ResponseEntity.ok(this.evService.insert(ev));
     }

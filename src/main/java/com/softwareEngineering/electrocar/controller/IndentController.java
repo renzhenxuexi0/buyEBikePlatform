@@ -37,7 +37,7 @@ public class IndentController {
      * @param id 主键
      * @return 单条数据
      */
-    @GetMapping("{id}")
+    @GetMapping("/id/{id}")
     public ResponseEntity<Indent> queryById(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(this.indentService.queryById(id));
     }
@@ -48,7 +48,7 @@ public class IndentController {
      * @param indent 实体
      * @return 新增结果
      */
-    @PostMapping
+    @PostMapping("/add")
     public ResponseEntity<Indent> add(Indent indent) {
         return ResponseEntity.ok(this.indentService.insert(indent));
     }
