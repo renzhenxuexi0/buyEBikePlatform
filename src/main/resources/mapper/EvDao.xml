@@ -35,7 +35,7 @@
                 and id = #{ev.id}
             </if>
             <if test="ev.name != null and ev.name != ''">
-                and name = #{ev.name}
+                and name like concat('%',#{ev.name},'%')
             </if>
             <if test="ev.brand != null and ev.brand != ''">
                 and brand = #{ev.brand}
@@ -65,7 +65,7 @@
                 and id = #{id}
             </if>
             <if test="name != null and name != ''">
-                and name = #{name}
+                and name like concat('%',#{name},'%')
             </if>
             <if test="brand != null and brand != ''">
                 and brand = #{brand}

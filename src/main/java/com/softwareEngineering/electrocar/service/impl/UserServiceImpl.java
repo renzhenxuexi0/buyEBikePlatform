@@ -43,12 +43,12 @@ public class UserServiceImpl implements UserService {
     /**
      * 通过手机号和密码查找用户
      *
-     * @param phone 手机号
+     * @param phone    手机号
      * @param password 密码
      * @return 是否存在
      */
-    public Boolean queryByPhoneAndPassword(String phone, String password){
-        return userDao.queryByPhoneAndPassword(phone, password) != null;
+    public User queryByPhoneAndPassword(String phone, String password) {
+        return userDao.queryByPhoneAndPassword(phone, password);
     }
 
     /**
@@ -79,7 +79,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public Boolean insert(User user) {
-        return this.userDao.insert(user)>0;
+        return this.userDao.insert(user) > 0;
     }
 
     /**

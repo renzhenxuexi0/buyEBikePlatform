@@ -1,12 +1,12 @@
 package com.softwareEngineering.electrocar.service.impl;
 
-import com.softwareEngineering.electrocar.entity.Business;
 import com.softwareEngineering.electrocar.dao.BusinessDao;
+import com.softwareEngineering.electrocar.entity.Business;
 import com.softwareEngineering.electrocar.service.BusinessService;
-import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 

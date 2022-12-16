@@ -1,4 +1,4 @@
-package com.softwareEngineering.electrocar.config;
+package com.softwareEngineering.electrocar.component;
 
 import org.springframework.core.MethodParameter;
 import org.springframework.data.domain.PageRequest;

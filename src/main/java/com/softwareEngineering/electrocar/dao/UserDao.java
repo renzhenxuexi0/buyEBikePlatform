@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+
 @Mapper
 public interface UserDao {
 
@@ -46,7 +47,7 @@ public interface UserDao {
     /**
      * 通过手机号和密码查找用户
      *
-     * @param phone 手机号
+     * @param phone    手机号
      * @param password 密码
      * @return 实例对象
      */

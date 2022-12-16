@@ -44,11 +44,11 @@ public interface UserService {
     /**
      * 通过手机号和密码查找用户
      *
-     * @param phone 手机号
+     * @param phone    手机号
      * @param password 密码
      * @return 是否存在
      */
-    Boolean queryByPhoneAndPassword(String phone, String password);
+    User queryByPhoneAndPassword(String phone, String password);
 
     /**
      * 新增数据

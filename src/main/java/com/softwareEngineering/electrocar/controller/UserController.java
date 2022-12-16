@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 
 @RestController
@@ -68,13 +69,21 @@ public class UserController {
     /**
      * 通过手机和密码查找用户
      *
-     * @param phone 手机号
+     * @param phone    手机号
      * @param password 密码
      * @return 是否存在
      */
     @GetMapping("{phone}/{password}")
-    public ResponseEntity<Boolean> queryByPhone(@PathVariable("phone") String phone, @PathVariable("password") String password) {
-        return ResponseEntity.ok(this.userService.queryByPhoneAndPassword(phone, password));
+    public ResponseEntity<Boolean> queryByPhone(@PathVariable("phone") String phone,
+                                                @PathVariable("password") String password,
+                                                HttpSession session) {
+        User user = this.userService.queryByPhoneAndPassword(phone, password);
+        if (user != null) {
+            session.setAttribute("loginUser", user);
+            return ResponseEntity.ok(true);
+        } else {
+            return ResponseEntity.ok(false);
+        }
     }
 
     /**
