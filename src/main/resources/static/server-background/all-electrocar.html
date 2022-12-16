@@ -86,12 +86,12 @@
         methods: {
             getAll(page, size) {
                 if (this.name !== '') {
-                    axios.get("/page/ev?page=" + page + "&size=" + size + "&name=" + this.name).then((res) => {
+                    axios.get("/ev/page?page=" + page + "&size=" + size + "&name=" + this.name).then((res) => {
                         this.total = res.data.totalElements;
                         this.tableData = res.data.content;
                     });
                 } else {
-                    axios.get("/page/ev?page=" + page + "&size=" + size).then((res) => {
+                    axios.get("/ev/page?page=" + page + "&size=" + size).then((res) => {
                         this.total = res.data.totalElements;
                         this.tableData = res.data.content;
                     });

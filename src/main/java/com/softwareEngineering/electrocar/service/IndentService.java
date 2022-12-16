@@ -39,7 +39,7 @@ public interface IndentService {
      * @param indent 实例对象
      * @return 实例对象
      */
-    Indent update(Indent indent);
+    Boolean update(Indent indent);
 
     /**
      * 通过主键删除数据

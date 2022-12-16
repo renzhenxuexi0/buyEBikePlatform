@@ -60,7 +60,7 @@ public class IndentController {
      * @return 编辑结果
      */
     @PutMapping
-    public ResponseEntity<Indent> edit(Indent indent) {
+    public ResponseEntity<Boolean> edit(Indent indent) {
         return ResponseEntity.ok(this.indentService.update(indent));
     }
 
