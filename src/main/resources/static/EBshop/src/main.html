@@ -7,6 +7,41 @@
 </head>
 <body>
 <div id="main">
+
+    <el-dialog title="您的订单" :visible.sync="dialogTableVisible">
+        <el-table :data="indentData">
+
+
+            <el-table-column property="ev.name" label="电动车名称"></el-table-column>
+            <el-table-column property="business.address" label="商家地址"></el-table-column>
+            <el-table-column property="business.phone" label="商家电话"></el-table-column>
+            <el-table-column property="ev.price" label="价格"></el-table-column>
+            <el-table-column label="图片">
+                <template slot-scope="scope">
+                    <el-image :src="'/image/'+scope.row.ev.image"></el-image>
+                </template>
+            </el-table-column>
+            <el-table-column label="订单状态">
+                <template slot-scope="scope">
+                    <span v-if="scope.row.indent.payingSign==0">购买方式：直接购买 状态：商家未处理</span>
+                    <span v-else-if="scope.row.indent.payingSign==1">购买方式：以旧换新购买 状态：商家未处理</span>
+                    <span v-else-if="scope.row.indent.payingSign==2">购买方式：直接购买 状态：商家已接收</span>
+                    <span v-else-if="scope.row.indent.payingSign==3">购买方式：以旧换新购买 状态：商家已接收</span>
+                    <span v-else-if="scope.row.indent.payingSign==4">购买方式：直接购买 状态：商家拒绝</span>
+                    <span v-else-if="scope.row.indent.payingSign==5">购买方式：以旧换新购买 状态：商家拒绝</span>
+                </template>
+            </el-table-column>
+        </el-table>
+        <el-pagination
+                background
+                layout="prev, pager, next"
+                :total="indentTotal"
+                @current-change="handleCurrentChange2"
+                :current-page.sync="currentPage2"
+                :page-size="indentPage">
+        </el-pagination>
+    </el-dialog>
+
     <div class="main_top_text">
         <el-row id="main_top_from">
 
@@ -14,6 +49,7 @@
                 <el-dropdown v-show="flag">
                     <span>
                     {{user.username}}<i class="el-icon-arrow-down el-icon--right"></i>
+                        <el-button type="text" @click="dialogTableVisible = true">查看您的订单</el-button>
                     </span>
                     <el-dropdown-menu slot="dropdown">
                         <el-dropdown-item @click.native="breakLogin">注销</el-dropdown-item>
@@ -21,8 +57,8 @@
                 </el-dropdown>
 
             </el-col>
-            <el-col><a href="http://localhost:8080/EBshop/src/Login.html" id="loginLink">登录</a></el-col>
-            <el-col><a href="http://localhost:8080/EBshop/src/Register.html" id="registerLink">注册</a></el-col>
+            <el-col><a :href="urlLogin" id="loginLink">登录</a></el-col>
+            <el-col><a :href="urlRegister" id="registerLink">注册</a></el-col>
 
         </el-row>
     </div>
@@ -39,7 +75,7 @@
             <el-row style="padding: 20px">
                 <el-col :span="6" v-for="ev in col">
                     <el-card :body-style="{ padding: '0px' }" style="max-height: 450px;max-width: 400px;">
-                        <img src="../image/EV.png" class="image" width="400px" height="400px">
+                        <img :src="'/image/'+ev.image" class="image" width="350px" height="350px">
                         <div style="padding: 5px;  display: flex;text-align: center;">
                             <el-link :underline="false" style="margin: auto; " @click="onBuy(ev)">{{ev.name}}</el-link>
                         </div>
@@ -72,10 +108,15 @@
     new Vue({
         el: "#main",
         data: {
+            indentTotal: 0,
+            indentPage: 5,
+            currentPage2: 1,
+            dialogTableVisible: false,
+            indentData: [],
             page_size: 8,
             total: 0,
             searchText: '',
-            currentPage: 0,
+            currentPage: 1,
             rowEvData: [],
             user: {
                 id: null,
@@ -83,9 +124,43 @@
                 address: null,
                 phone: null,
             },
+
+            urlLogin: "",
+            urlRegister: "",
             flag: false
         },
         methods: {
+            handleCurrentChange2(val) {
+                this.currentPage2 = val
+                this.indentData = []
+                this.getAllIndent(val - 1)
+
+            },
+            getAllIndent(page) {
+                axios.get("/indent/page?userId=" + this.user.id + "&page=" + page + "&size=5").then((res) => {
+                    this.indentTotal = res.data.totalElements
+                    for (let i = 0; i < res.data.content.length; i++) {
+                        const allContent = {
+                            indent: {},
+                            ev: {},
+                            business: {}
+                        }
+                        allContent.indent = res.data.content[i];
+                        axios.get("/ev/id/" + res.data.content[i].evId).then((res) => {
+                            allContent.ev = res.data;
+                            axios.get("/business/id/" + allContent.ev.businessId).then((res) => {
+                                allContent.business = res.data;
+                            })
+                            if (allContent.indent.payingSign == 1 || allContent.indent.payingSign == 3 || allContent.indent.payingSign == 5) {
+                                allContent.ev.price *= 0.7
+                                allContent.ev.price = allContent.ev.price.toFixed(1)
+                            }
+                        })
+                        this.indentData.push(allContent);
+                    }
+
+                })
+            },
             search() {
                 this.currentPage = 1;
                 this.rowEvData = []
@@ -120,7 +195,7 @@
                     });
                     setTimeout(function () {
                         window.location.pathname = "/EBshop/src/Login.html"
-                        
+
                     }, 3000)
 
                 }
@@ -129,13 +204,18 @@
             getAll(page) {
                 axios.get("/ev/page?page=" + page + "&size=8").then((res) => {
                     this.total = res.data.totalElements;
-                    for (let i = 1; i <= res.data.content.length; i++) {
-                        a.push(res.data.content[i - 1])
-                        if (i % 4 == 0) {
-                            this.rowEvData.push(a)
-                            a = [];
+                    if (res.data.content.type != Array){
+                        this.rowEvData.push(res.data.content)
+                    }else {
+                        for (let i = 1; i <= res.data.content.length; i++) {
+                            a.push(res.data.content[i - 1])
+                            if (i % 4 == 0) {
+                                this.rowEvData.push(a)
+                                a = [];
+                            }
                         }
                     }
+
                 });
 
             },
@@ -149,7 +229,8 @@
         },
 
         created() {
-            console.log(Cookies.get("userId"))
+            this.urlLogin = window.location.origin + "/EBshop/src/Login.html"
+            this.urlRegister = window.location.origin + "/EBshop/src/Register.html"
 
             this.getAll(this.currentPage - 1)
             if (Cookies.get("userId") != null) {
@@ -160,6 +241,7 @@
                 document.getElementById("loginLink").style.display = "none"
                 document.getElementById("registerLink").style.display = "none"
                 this.flag = true
+                this.getAllIndent(this.currentPage - 1)
             } else {
                 document.getElementById("loginLink").style.display = ""
                 document.getElementById("registerLink").style.display = ""

@@ -32,7 +32,7 @@
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="onRegister">注册</el-button>
-        <el-link type="info" href="http://localhost:8080/EBshop/src/Login.html">已有账号？立即登录！</el-link>
+        <el-link type="info" :href="url">已有账号？立即登录！</el-link>
     </el-form-item>
   </el-form>
 </div>
@@ -92,6 +92,9 @@
         }).catch(err=>{
           alert("请求超时")
         })
+      },
+      created(){
+        this.url = window.location.origin + "/EBshop/src/Login.html"
       }
     },
     data:{
@@ -103,7 +106,8 @@
           address:""
         },
         username_err:"",
-        userphone_err:""
+        userphone_err:"",
+        url:"",
 
     },
   })

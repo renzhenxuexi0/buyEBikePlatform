@@ -106,11 +106,9 @@
             const ev_id = Cookies.get("ev_id");
             axios.get("/ev/id/"+ev_id).then((res)=>{
                 this.ev=res.data;
-                console.log(this.ev)
-            })
-            axios.get("/business/id/"+ev.businessId).then((res)=>{
-                this.ev=res.data;
-                console.log(this.ev)
+                axios.get("/business/id/"+this.ev.businessId).then((res)=>{
+                    this.business=res.data;
+                })
             })
         }
     })

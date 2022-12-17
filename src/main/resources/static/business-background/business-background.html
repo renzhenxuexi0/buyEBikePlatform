@@ -42,13 +42,17 @@
         .bg-main {
             height: 100%;
         }
+
     </style>
     <link href="../model/element_ui_index.css" rel="stylesheet">
 </head>
 <body>
 <div id="business_background">
     <el-container class="bg-container">
-        <el-header class="bg-header">欢迎{{brand}}商家入驻！</el-header>
+        <el-header class="bg-header">欢迎{{business.brand}}商家入驻！
+            <el-button type="info" round @click="businessBreak" size="mini">注销</el-button>
+            <el-button type="danger" round @click="businessLeft" size="mini">撤离</el-button>
+        </el-header>
         <el-container>
             <el-aside class="bg-aside">
                 <el-menu
@@ -62,12 +66,15 @@
                     <el-menu-item index="/allIndent"><i class="el-icon-star-off"></i><span>查看管理订单</span>
                     </el-menu-item>
                 </el-menu>
+
+
             </el-aside>
             <el-main class="bg-main">
                 <router-view></router-view>
             </el-main>
         </el-container>
     </el-container>
+
 </div>
 </body>
 
@@ -110,16 +117,48 @@
     });
 
 
-    const vue = new Vue({
+    new Vue({
         el: "#business_background",
         router: vueRouter,
         data: {
-            brand: ""
+
+            business:{
+                id:null,
+                brand:null,
+                address:null,
+                phone:null,
+                account: null,
+                entrySign:null
+            }
         },
-        methods: {},
+        methods: {
+            businessBreak(){
+                Cookies.remove("businessId", {path: ''})
+                Cookies.remove("businessBrand", {path: ''})
+                Cookies.remove("businessAddress", {path: ''})
+                Cookies.remove("businessPhone", {path: ''})
+                Cookies.remove("businessAccount", {path: ''})
+                location.reload(true);
+            },
+            businessLeft(){
+
+                this.business.entrySign=2
+                axios.put("/business",this.business).then((res)=>{
+                   this.businessBreak()
+                })
+
+
+            }
+        },
         created() {
+
             if (Cookies.get("businessId") != null) {
-                this.brand = Cookies.get("businessBrand")
+                this.business.brand = Cookies.get("businessBrand")
+                this.business.id = Cookies.get("businessId")
+                this.business.address = Cookies.get("businessAddress")
+                this.business.phone = Cookies.get("businessPhone")
+                this.business.entrySign = Cookies.get("businessEntrySign")
+                this.business.account = Cookies.get("businessAccount")
             } else {
                 window.location.pathname = "/business-background/businessLogin.html"
             }

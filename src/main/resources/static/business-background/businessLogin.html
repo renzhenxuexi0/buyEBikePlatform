@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Login</title>
     <link href="./css/Login.css" rel="stylesheet" type="text/css"/>
+
 </head>
 <body>
 
@@ -13,11 +14,10 @@
         <el-form-item label="账号">
             <el-input v-model="business.account" class="businessInput" style="width: 70%"
                       suffix-icon="el-icon-business"></el-input>
-
         </el-form-item>
         <el-form-item label="密码">
             <el-input v-model="business.password" class="businessInput" style="width: 70%" suffix-icon="el-icon-goods"
-                      show-password>>
+                      show-password>
             </el-input>
         </el-form-item>
         <el-form-item>
@@ -39,8 +39,7 @@
 
 <script>
     axios.default.baseURL = "http://localhost:8080"
-    const link = document.getElementById("el-link-register")
-    link.href = window.location.host + "/business-background/businessRegister.html"
+
     new Vue({
         el: "#businessLogin",
         created() {
