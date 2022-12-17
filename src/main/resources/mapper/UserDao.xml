@@ -69,20 +69,20 @@
         </where>
     </select>
 
-    <select id="queryByUsername" resultType="com.softwareEngineering.electrocar.entity.User"
+    <select id="queryByUsername" resultMap="UserMap"
             parameterType="java.lang.String">
         select id, username, password, phone, address
         from user
         where username = #{username}
     </select>
 
-    <select id="queryByPhone" resultType="com.softwareEngineering.electrocar.entity.User"
+    <select id="queryByPhone" resultMap="UserMap"
             parameterType="java.lang.String">
         select id, username, password, phone, address
         from user
         where phone = #{phone}
     </select>
-    <select id="queryByPhoneAndPassword" resultType="com.softwareEngineering.electrocar.entity.User">
+    <select id="queryByPhoneAndPassword" resultMap="UserMap">
         select id, username, password, phone, address
         from user
         where phone = #{phone}

@@ -84,19 +84,19 @@
             </if>
         </where>
     </select>
-    <select id="queryByBrand" resultType="com.softwareEngineering.electrocar.entity.Business"
+    <select id="queryByBrand" resultMap="BusinessMap"
             parameterType="java.lang.String">
         select id, brand, account, password, phone, address, entry_sign
         from business
         where brand = #{brand}
     </select>
-    <select id="queryByPhone" resultType="com.softwareEngineering.electrocar.entity.Business"
+    <select id="queryByPhone" resultMap="BusinessMap"
             parameterType="java.lang.String">
         select id, brand, account, password, phone, address, entry_sign
         from business
         where phone = #{phone}
     </select>
-    <select id="queryByAccountAndPassword" resultType="com.softwareEngineering.electrocar.entity.Business">
+    <select id="queryByAccountAndPassword" resultMap="BusinessMap">
         select id, brand, account, password, phone, address, entry_sign
         from business
         where account = #{account}
