@@ -6,7 +6,7 @@ body {
 
 }
 
-#LoginData{
+#businessLogin{
     position: fixed;
     left: 60%;
     right: 0;
@@ -22,7 +22,7 @@ h1{
     font-size: 50px;
     color: white;
 }
-.userInput{
+.businessInput{
     width: 50%;
 }
 #LoginFrom{

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
-    <link href="./css/Login.css" rel="stylesheet" style="text:css"/>
+    <link href="./css/Login.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 
@@ -55,7 +55,7 @@
                         Cookies.set("businessPhone", this.business.phone, { expires: 1,path:'' })
                         Cookies.set("businessEntrySign", this.business.entrysign, { expires: 1,path:'' })
 
-                        window.location.href="http://localhost:8080/EBshop/src/main.html"
+                        window.location.href="http://localhost:8080/business-background.html"
                     }else {
                         alert("账号或密码错误")
                     }
