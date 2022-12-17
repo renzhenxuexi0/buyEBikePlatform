@@ -7,64 +7,66 @@
 </head>
 <body>
 
-<div id="RegisterData">
+<div id="businessRegisterData">
     <h1>欢迎来到电动车商家注册网站！</h1><br>
     <el-form ref="business" :model="business" label-width="80px" label-height="80px" id="RegisterFrom">
         <el-form-item label="品牌">
-            <el-input placeholder="请输入品牌" v-model="business.brand" id="businessname" class="businessInput"
+            <el-input placeholder="请输入品牌" v-model="business.brand" id="businessBrand" class="businessInput"
                       style="width: 70%"
                       suffix-icon="el-icon-business" @blur="show"></el-input>
             <br>
-            <span id="businessname_err" ref="businessname_err" class="err_msg" style="display: none">品牌已存在</span>
+            <span id="businessBrand_err" class="err_msg" style="display: none">品牌已存在</span>
         </el-form-item>
         <el-form-item label="电话">
-            <el-input placeholder="请输入电话" maxlength="11" v-model="business.phone" id="businessphone"
+            <el-input placeholder="请输入电话" maxlength="11" v-model="business.phone" id="businessPhone"
                       class="businessInput" style="width: 70%"
                       suffix-icon="el-icon-phone-outline" @blur="show1"></el-input>
             <br>
             <span id="businessphone_err" class="err_msg" style="display: none">电话已存在</span>
         </el-form-item>
         <el-form-item label="密码">
-            <el-input placeholder="请输入6-12密码" maxlength="12" v-model="business.password" id="businesspassword"
+            <el-input placeholder="请输入6-12密码" maxlength="12" v-model="business.password" id="businessPassword"
                       class="businessInput" style="width: 70%"
                       suffix-icon="el-icon-goods" show-word-limit></el-input>
         </el-form-item>
         <el-form-item label="地址">
             <el-input type="textarea" :rows="2" placeholder="请输入地址" maxlength="100" v-model="business.address"
-                      id="businessaddress" class="businessInput" style="width: 70%"
+                      id="businessAddress" class="businessInput" style="width: 70%"
                       suffix-icon="el-icon-s-home" show-word-limit></el-input>
         </el-form-item>
         <el-form-item>
             <el-button type="primary" @click="onRegister">注册</el-button>
-            <el-link type="info" href="http://localhost:8080/business-background/businessLogin.html">
+            <el-link type="info" :href="uri">
                 已有账号？立即登录！
             </el-link>
         </el-form-item>
     </el-form>
 </div>
-<script src="../model/http_cdn.jsdelivr.net_npm_vue@2.7.14_dist_vue.js"></script>
-<script src="../model/http_unpkg.com_axios_dist_axios.js"></script>
-<script src="../model/http_unpkg.com_element-ui_lib_index.js"></script>
-<link rel="stylesheet" href="../model/http_unpkg.com_element-ui_lib_theme-chalk_index.css">
+<script src="../model/vue.js"></script>
+<script src="../model/axios.js"></script>
+<script src="../model/element_ui_index.js"></script>
+<link rel="stylesheet" href="../model/element_ui_index.css">
 
 <script>
-
     axios.default.baseURL = "http://localhost:8080"
 
     new Vue({
-        el: "#RegisterData",
+        el: "#businessRegisterData",
+        created() {
+            this.uri = window.location.origin + "/business-background/businessLogin.html"
+        },
         methods: {
             show() {
                 var flag;
-                axios.get("/business/brand/" + this.business.businessname)
+                axios.get("/business/brand/" + this.business.brand)
                     .then(res => {
                         console.log(res.data)
                         if (res.data == true) {
-                            document.getElementById("businessname_err").style.color = 'red';
-                            document.getElementById("businessname_err").style.display = ""
+                            document.getElementById("businessBrand_err").style.color = 'red';
+                            document.getElementById("businessBrand_err").style.display = ""
                         } else {
-                            document.getElementById("businessname_err").style.color = 'red';
-                            document.getElementById("businessname_err").style.display = "none"
+                            document.getElementById("businessBrand_err").style.color = 'red';
+                            document.getElementById("businessBrand_err").style.display = "none"
                             flag = true;
                         }
 
@@ -109,8 +111,9 @@
                 entrySign: 0
 
             },
-            businessname_err: "",
-            businessphone_err: ""
+            uri: "",
+            businessBrand_err: "",
+            businessPhone_err: ""
 
         },
     })

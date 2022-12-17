@@ -16,56 +16,59 @@
 
         </el-form-item>
         <el-form-item label="密码">
-            <el-input v-model="business.password" class="businessInput" style="width: 70%" suffix-icon="el-icon-goods" show-password>>
+            <el-input v-model="business.password" class="businessInput" style="width: 70%" suffix-icon="el-icon-goods"
+                      show-password>>
             </el-input>
         </el-form-item>
         <el-form-item>
             <el-button type="primary" @click="onLogin">登录</el-button>
-            <el-link type="info"
-                     v-model
-                     :href="uri+'/business-background/businessRegister.html'">
+            <el-link type="info" :href="uri">
                 注册
             </el-link>
         </el-form-item>
     </el-form>
 </div>
+</body>
 
-<script src="../model/http_cdn.jsdelivr.net_npm_vue@2.7.14_dist_vue.js"></script>
-<script src="../model/http_unpkg.com_axios_dist_axios.js"></script>
-<script src="../model/http_unpkg.com_element-ui_lib_index.js"></script>
-<script src="../model/http_cdn.jsdelivr.net_npm_js-cookie@3.0.1_dist_js.cookie.js"></script>
-<link rel="stylesheet" href="../model/http_unpkg.com_element-ui_lib_theme-chalk_index.css">
+<script src="../model/vue.js"></script>
+<script src="../model/axios.js"></script>
+<script src="../model/element_ui_index.js"></script>
+<script src="../model/js_cookie.js"></script>
+<link rel="stylesheet" href="../model/element_ui_index.css">
+
 
 <script>
     axios.default.baseURL = "http://localhost:8080"
+    const link = document.getElementById("el-link-register")
+    link.href = window.location.host + "/business-background/businessRegister.html"
     new Vue({
         el: "#businessLogin",
-        created(){
-          this.uri = window.location.host;
+        created() {
+            this.uri = window.location.origin + "/business-background/businessRegister.html"
         },
         methods: {
             onLogin() {
-                axios.get("/business/account/" + this.business.account+"/password/"+this.business.password).then((res) => {
+                axios.get("/business/account/" + this.business.account + "/password/" + this.business.password).then((res) => {
                     console.log(res.data)
-                    if (res.data!=null){
+                    if (res.data != null) {
 
-                        this.business=res.data
-                        const entrySign=this.business.entrySign
+                        this.business = res.data
+                        const entrySign = this.business.entrySign
 
-                        if(entrySign==1||entrySign==2||entrySign==3){
-                            Cookies.set("businessId", this.business.id, { expires: 1,path:'' })
-                            Cookies.set("businessAccount", this.business.account, { expires: 1,path:'' })
-                            Cookies.set("businessBrand", this.business.brand, { expires: 1,path:'' })
-                            Cookies.set("businessAddress", this.business.address, { expires: 1,path:'' })
-                            Cookies.set("businessPhone", this.business.phone, { expires: 1,path:'' })
-                            Cookies.set("businessEntrySign", this.business.entrySign, { expires: 1,path:'' })
+                        if (entrySign == 1 || entrySign == 2 || entrySign == 3) {
+                            Cookies.set("businessId", this.business.id, {expires: 1, path: ''})
+                            Cookies.set("businessAccount", this.business.account, {expires: 1, path: ''})
+                            Cookies.set("businessBrand", this.business.brand, {expires: 1, path: ''})
+                            Cookies.set("businessAddress", this.business.address, {expires: 1, path: ''})
+                            Cookies.set("businessPhone", this.business.phone, {expires: 1, path: ''})
+                            Cookies.set("businessEntrySign", this.business.entrySign, {expires: 1, path: ''})
                             window.location.pathname = "/business-background/business-background.html"
-                        }else if (entrySign==0){
+                        } else if (entrySign == 0) {
                             this.$message.error("申请未被同意！")
-                        }else if (entrySign==4){
+                        } else if (entrySign == 4) {
                             this.$message.error("已撤离！")
                         }
-                    }else {
+                    } else {
                         alert("账号或密码错误")
                     }
                 })
@@ -75,11 +78,10 @@
             business: {
                 account: '',
                 password: "",
-                uri:""
-            }
+            },
+            uri:""
         }
     })
 
 </script>
-</body>
 </html>
