@@ -10,29 +10,35 @@
 <div id="RegisterData">
     <h1>欢迎来到电动车商家注册网站！</h1><br>
     <el-form ref="business" :model="business" label-width="80px" label-height="80px" id="RegisterFrom">
-        <el-form-item label="品牌" >
-            <el-input placeholder="请输入品牌"  v-model="business.brand" id="businessname" class="businessInput" style="width: 70%"
-                      suffix-icon="el-icon-business"  @blur="show"></el-input>
+        <el-form-item label="品牌">
+            <el-input placeholder="请输入品牌" v-model="business.brand" id="businessname" class="businessInput"
+                      style="width: 70%"
+                      suffix-icon="el-icon-business" @blur="show"></el-input>
             <br>
-            <span id="businessname_err" ref="businessname_err"  class="err_msg" style="display: none">品牌已存在</span>
+            <span id="businessname_err" ref="businessname_err" class="err_msg" style="display: none">品牌已存在</span>
         </el-form-item>
-        <el-form-item label="电话" >
-            <el-input placeholder="请输入电话" maxlength="11" v-model="business.phone" id="businessphone" class="businessInput" style="width: 70%"
+        <el-form-item label="电话">
+            <el-input placeholder="请输入电话" maxlength="11" v-model="business.phone" id="businessphone"
+                      class="businessInput" style="width: 70%"
                       suffix-icon="el-icon-phone-outline" @blur="show1"></el-input>
             <br>
-            <span id="businessphone_err"  class="err_msg" style="display: none">电话已存在</span>
+            <span id="businessphone_err" class="err_msg" style="display: none">电话已存在</span>
         </el-form-item>
         <el-form-item label="密码">
-            <el-input placeholder="请输入6-12密码" maxlength="12" v-model="business.password" id="businesspassword" class="businessInput" style="width: 70%"
+            <el-input placeholder="请输入6-12密码" maxlength="12" v-model="business.password" id="businesspassword"
+                      class="businessInput" style="width: 70%"
                       suffix-icon="el-icon-goods" show-word-limit></el-input>
         </el-form-item>
         <el-form-item label="地址">
-            <el-input type="textarea" :rows="2" placeholder="请输入地址" maxlength="100"v-model="business.address" id="businessaddress" class="businessInput" style="width: 70%"
-                      suffix-icon="el-icon-s-home" show-word-limit> </el-input>
+            <el-input type="textarea" :rows="2" placeholder="请输入地址" maxlength="100" v-model="business.address"
+                      id="businessaddress" class="businessInput" style="width: 70%"
+                      suffix-icon="el-icon-s-home" show-word-limit></el-input>
         </el-form-item>
         <el-form-item>
             <el-button type="primary" @click="onRegister">注册</el-button>
-            <el-link type="info" href="http://localhost:8080/business-background/businessLogin.html">已有账号？立即登录！</el-link>
+            <el-link type="info" href="http://localhost:8080/business-background/businessLogin.html">
+                已有账号？立即登录！
+            </el-link>
         </el-form-item>
     </el-form>
 </div>
@@ -43,38 +49,38 @@
 
 <script>
 
-    axios.default.baseURL="http://localhost:8080"
+    axios.default.baseURL = "http://localhost:8080"
 
     new Vue({
-        el:"#RegisterData",
-        methods:{
-            show(){
+        el: "#RegisterData",
+        methods: {
+            show() {
                 var flag;
-                axios.get("/business/brand/"+this.business.businessname)
-                    .then(res=>{
+                axios.get("/business/brand/" + this.business.businessname)
+                    .then(res => {
                         console.log(res.data)
-                        if(res.data==true){
+                        if (res.data == true) {
                             document.getElementById("businessname_err").style.color = 'red';
-                            document.getElementById("businessname_err").style.display=""
-                        }else {
+                            document.getElementById("businessname_err").style.display = ""
+                        } else {
                             document.getElementById("businessname_err").style.color = 'red';
-                            document.getElementById("businessname_err").style.display="none"
-                            flag=true;
+                            document.getElementById("businessname_err").style.display = "none"
+                            flag = true;
                         }
 
                     })
                 return flag;
             },
-            show1(){
+            show1() {
                 var flag;
-                axios.get("/business/phone/"+this.business.phone).then(res=>{
-                    if(res.data==true){
-                        document.getElementById("businessphone_err").style.color='red';
-                        document.getElementById("businessphone_err").style.display='';
-                    }else {
-                        document.getElementById("businessphone_err").style.color='red';
-                        document.getElementById("businessphone_err").style.display='none';
-                        flag=true;
+                axios.get("/business/phone/" + this.business.phone).then(res => {
+                    if (res.data == true) {
+                        document.getElementById("businessphone_err").style.color = 'red';
+                        document.getElementById("businessphone_err").style.display = '';
+                    } else {
+                        document.getElementById("businessphone_err").style.color = 'red';
+                        document.getElementById("businessphone_err").style.display = 'none';
+                        flag = true;
                     }
 
                 })
@@ -83,29 +89,28 @@
             },
             onRegister() {
                 console.log(this.business)
-                axios.post('/business/add',this.business).then(res=>{
-                    if(!this.show()&&!this.show1()&&res.data==true&&this.business.phone.length==11&&this.business.password.length>=6){
-                        window.location.href="http://localhost:8080/business-background/businessLogin.html"
-                    }else {
-                        alert(注册失败)
+                axios.post('/business/add', this.business).then(res => {
+                    if (!this.show() && !this.show1() && res.data.account != null && this.business.phone.length == 11 && this.business.password.length >= 6) {
+                        alert("注册成功！你的账号是" + res.data.account)
+                        window.location.pathname = "/business-background/businessLogin.html"
+                    } else {
+                        alert("注册失败")
                     }
-                }).catch(err=>{
-                    alert("请求超时")
                 })
             }
         },
-        data:{
+        data: {
 
-            business:{
-                brand:"",
-                phone:"",
-                password:"",
-                address:"",
-                entrySign:0
+            business: {
+                brand: "",
+                phone: "",
+                password: "",
+                address: "",
+                entrySign: 0
 
             },
-            businessname_err:"",
-            businessphone_err:""
+            businessname_err: "",
+            businessphone_err: ""
 
         },
     })
