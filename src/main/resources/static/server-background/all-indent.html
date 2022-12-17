@@ -28,9 +28,15 @@
                 label="电动车id"
                 prop="evId">
         </el-table-column>
-        <el-table-column
-                label="订单状态"
-                prop="payingSign">
+        <el-table-column label="订单状态">
+            <template slot-scope="scope">
+                <span v-if="scope.row.payingSign==0">未处理的直接购买订单</span>
+                <span v-else-if="scope.row.payingSign==1">未处理的以旧换新购买订单</span>
+                <span v-else-if="scope.row.payingSign==2">已接受的直接购买的订单</span>
+                <span v-else-if="scope.row.payingSign==3">已接受的以旧换新的订单</span>
+                <span v-else-if="scope.row.payingSign==4">已拒绝的直接购买的订单</span>
+                <span v-else-if="scope.row.payingSign==5">已拒绝的以旧换新的订单</span>
+            </template>
         </el-table-column>
     </el-table>
     <el-pagination
