@@ -69,3 +69,4 @@ mybatis:
 server:
   #请求头最大容量
   max-http-header-size: 1024000
+  port: 8080

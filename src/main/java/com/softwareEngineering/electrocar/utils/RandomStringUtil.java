@@ -21,8 +21,6 @@ public class RandomStringUtil {
             //随机生成一个正数，这个正数的范围是[0,62),包含0不包含62，这里数值可以修改
             //以上面str字符串为例，如果想要纯小写则数字改为26，也可以替换str为纯小写或者纯大写或者纯数字
             int number = random.nextInt(62);
-//            System.out.println(number);
-            System.out.println(str.charAt(number));
             //number为索引，在str中取出对应索引的字符，添加到stringBuilder中
             stringBuilder.append(str.charAt(number));
         }
