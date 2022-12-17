@@ -1,6 +1,6 @@
 body {
     background: #333333;
-    background-image: url("../image/EV.png");
+    background-image: url("./image/EV.png");
     background-repeat: no-repeat;
     background-position: 0 -40%;
 
@@ -22,7 +22,7 @@ h1{
     font-size: 50px;
     color: white;
 }
-.userInput{
+.businessInput{
     width: 50%;
 }
 #RegisterFrom{
