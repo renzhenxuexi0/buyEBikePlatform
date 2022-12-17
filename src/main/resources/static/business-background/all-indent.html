@@ -145,13 +145,16 @@
                             this.$message.error('拒绝失败失败');
                         }
                     })
-
+                }else {
+                    this.$message({
+                        message: '订单已处理',
+                        type: 'warning'
+                    });
                 }
             },
             getAll(page, size) {
                 axios.get("/indent/page?page=" + page + "&size=" + size).then((res) => {
                     this.total = res.data.totalElements;
-                    console.log(res)
                     for (let i = 0; i < res.data.content.length; i++) {
                         const allContent = {
                             indent: {},
@@ -168,8 +171,6 @@
                         this.tableData.push(allContent);
                     }
                 });
-
-                console.log(this.tableData)
             },
             handleSizeChange(val) {
                 this.pageSize = val;
