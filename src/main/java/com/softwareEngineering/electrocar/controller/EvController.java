@@ -35,6 +35,7 @@ public class EvController {
         return ResponseEntity.ok(this.evService.queryByPage(ev, pageRequest));
     }
 
+
     /**
      * 通过主键查询单条数据
      *
@@ -46,6 +47,12 @@ public class EvController {
         return ResponseEntity.ok(this.evService.queryById(id));
     }
 
+    /**
+     * 删除图片
+     *
+     * @param path 图片名字
+     * @return 返回信息
+     */
     @GetMapping("/deleteImage/{path}")
     public ResponseEntity<String> deleteImage(@PathVariable("path") String path) {
         String s = PicUtil.deFile(path);
@@ -98,8 +105,13 @@ public class EvController {
      * @return 删除是否成功
      */
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Boolean> deleteById(@PathVariable Integer id) {
-        return ResponseEntity.ok(this.evService.deleteById(id));
+    public ResponseEntity<String> deleteById(@PathVariable Integer id) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(this.evService.deleteById(id) + "");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NON_AUTHORITATIVE_INFORMATION).body("还有当前商品订单存在不能下架");
+        }
+
     }
 
 }
