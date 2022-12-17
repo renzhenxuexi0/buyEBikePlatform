@@ -43,19 +43,27 @@
         el: "#businessLogin",
         methods: {
             onLogin() {
-                axios.get("/business/phone/" + this.business.phone+"/password/"+this.business.password).then((res) => {
-
+                axios.get("/business/account/" + this.business.account+"/password/"+this.business.password).then((res) => {
+                    console.log(res.data)
                     if (res.data!=null){
 
                         this.business=res.data
-                        Cookies.set("businessId", this.business.id, { expires: 1,path:'' })
-                        Cookies.set("businessAccount", this.business.account, { expires: 1,path:'' })
-                        Cookies.set("businessBrand", this.business.brand, { expires: 1,path:'' })
-                        Cookies.set("businessAddress", this.business.address, { expires: 1,path:'' })
-                        Cookies.set("businessPhone", this.business.phone, { expires: 1,path:'' })
-                        Cookies.set("businessEntrySign", this.business.entrysign, { expires: 1,path:'' })
+                        const entrySign=this.business.entrySign
 
-                        window.location.href="http://localhost:8080/business-background.html"
+                        if(entrySign==1||entrySign==2||entrySign==3){
+                            Cookies.set("businessId", this.business.id, { expires: 1,path:'' })
+                            Cookies.set("businessAccount", this.business.account, { expires: 1,path:'' })
+                            Cookies.set("businessBrand", this.business.brand, { expires: 1,path:'' })
+                            Cookies.set("businessAddress", this.business.address, { expires: 1,path:'' })
+                            Cookies.set("businessPhone", this.business.phone, { expires: 1,path:'' })
+                            Cookies.set("businessEntrySign", this.business.entrySign, { expires: 1,path:'' })
+
+                            window.location.href="http://localhost:8080/business-background/business-background.html"
+                        }else if (entrySign==0){
+                            this.$message.error("申请未被同意！")
+                        }else if (entrySign==4){
+                            this.$message.error("已撤离！")
+                        }
                     }else {
                         alert("账号或密码错误")
                     }

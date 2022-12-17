@@ -48,7 +48,7 @@
 <body>
 <div id="business_background">
     <el-container class="bg-container">
-        <el-header class="bg-header">后台管理</el-header>
+        <el-header class="bg-header">欢迎{{brand}}商家入驻！</el-header>
         <el-container>
             <el-aside class="bg-aside">
                 <el-menu
@@ -76,7 +76,7 @@
 <script src="https://unpkg.com/vue-router@3/dist/vue-router.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
 <script>
 
 
@@ -112,9 +112,12 @@
     const vue = new Vue({
         el: "#business_background",
         router: vueRouter,
-        data: {},
+        data: {
+            brand:""
+        },
         methods: {},
         created() {
+            this.brand=Cookies.get("businessBrand")
         },
     })
 </script>

@@ -127,7 +127,7 @@
 <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
 <script>
     axios.default.baseURL = 'http://localhost:8080'
     new Vue({
@@ -150,7 +150,18 @@
             imageUrl: ''
         },
         created() {
-            this.getAll(this.currentPage - 1, this.pageSize);
+
+            /* Cookies.get("businessAccount")
+             Cookies.get("businessAddress")
+             Cookies.get("businessPhone")
+             Cookies.get("businessEntrySign")*/
+            if (Cookies.get("businessId") != null) {
+                this.ev.brand = Cookies.get("businessBrand")
+                this.getAll(this.currentPage - 1, this.pageSize);
+            } else {
+                window.location.href = "http://localhost:8080/business-background/businessLogin.html"
+            }
+
         },
         methods: {
             handleAvatarSuccess(res, file) {
@@ -175,7 +186,7 @@
             },
             submit() {
                 axios.post("/ev/add", this.ev).then((res) => {
-                    if (res.data) {
+                    if (res.data && this.ev.price.length > 0 && this.ev.model > 0 && this.fileList.length > 0) {
                         this.$message({
                             message: '添加成功！',
                             type: 'success'
@@ -207,12 +218,13 @@
             },
             getAll(page, size) {
                 if (this.name !== '') {
-                    axios.get("/ev/page?page=" + page + "&size=" + size + "&name=" + this.name).then((res) => {
+                    axios.get("/ev/page?page=" + page + "&size=" + size + "&name=" + this.name+
+                        "&businessId="+Cookies.get("businessId")).then((res) => {
                         this.total = res.data.totalElements;
                         this.tableData = res.data.content;
                     });
                 } else {
-                    axios.get("/ev/page?page=" + page + "&size=" + size).then((res) => {
+                    axios.get("/ev/page?page=" + page + "&size=" + size+"&businessId="+Cookies.get("businessId")).then((res) => {
                         this.total = res.data.totalElements;
                         this.tableData = res.data.content;
                     });

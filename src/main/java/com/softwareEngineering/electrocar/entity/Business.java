@@ -34,7 +34,7 @@ public class Business implements Serializable {
      */
     private String address;
     /**
-     * 0 代表申请入驻状态 1 代表入驻状态 2 代表撤离状态 3 被拒绝入驻 4 拒绝撤离
+     * 0 代表申请入驻状态 1 代表入驻状态 2 代表撤离状态 3 被拒绝撤离 4 撤离
      */
     private Integer entrySign;
 

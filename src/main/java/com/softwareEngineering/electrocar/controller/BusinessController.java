@@ -73,6 +73,7 @@ public class BusinessController {
      */
     @GetMapping("account/{account}/password/{password}")
     public ResponseEntity<Business> queryByAccountAndPassword(@PathVariable String account, @PathVariable String password) {
+        System.out.println(businessService.queryByAccountAndPassword(account, password));
         return ResponseEntity.ok(businessService.queryByAccountAndPassword(account, password));
     }
 

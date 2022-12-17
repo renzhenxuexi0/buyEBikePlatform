@@ -67,7 +67,7 @@
 <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
 <script>
     axios.default.baseURL = 'http://localhost:8080'
     new Vue({
@@ -80,7 +80,11 @@
             pageSize: 5
         },
         created() {
-            this.getAll(this.currentPage - 1, this.pageSize);
+            if (Cookies.get("businessId") != null) {
+                this.getAll(this.currentPage - 1, this.pageSize);
+            } else {
+                window.location.href = "http://localhost:8080/business-background/businessLogin.html"
+            }
         },
         methods: {
             handle(index, row) {
@@ -168,7 +172,10 @@
                         axios.get("/user/id/" + res.data.content[i].userId).then((res) => {
                             allContent.user = res.data;
                         })
-                        this.tableData.push(allContent);
+                        if (allContent.ev.businessId==Cookies.get("businessId")){
+                            this.tableData.push(allContent);
+                        }
+
                     }
                 });
             },
