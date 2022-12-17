@@ -86,7 +86,7 @@
         console.log(this.user)
         axios.post('/user/add',this.user).then(res=>{
           if(!this.show()&&!this.show1()&&res.data==true&&this.user.phone.length==11&&this.user.password.length>=6){
-            window.location.href="http://localhost:8080/EBshop/src/Login.html"
+            window.location.pathname="/EBshop/src/Login.html"
           }else {
             alert(注册失败)
           }

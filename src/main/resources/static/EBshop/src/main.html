@@ -113,7 +113,7 @@
             onBuy(ev) {
                 if (this.user.id != null) {
                     Cookies.set("ev_id", ev.id, {expires: 1});
-                    window.location.href = "http://localhost:8080/EBshop/src/Evform.html"
+                    window.location.pathname = "/EBshop/src/Evform.html"
                 } else {
                     this.$notify({
                         title: '警告',
@@ -121,7 +121,7 @@
                         type: 'warning'
                     });
                     setTimeout(function () {
-                        window.location.href = "http://localhost:8080/EBshop/src/Login.html"
+                        window.location.pathname = "/EBshop/src/Login.html"
                     }, 3000)
 
                 }
