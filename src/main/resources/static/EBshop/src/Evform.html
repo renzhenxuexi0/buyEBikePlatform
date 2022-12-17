@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Evform</title>
     <style>
-        #Evform {
+        #Evform{
             display: flex;
             justify-content: center;
             align-content: center;
@@ -13,7 +13,7 @@
 </head>
 <body>
 <div id="Evform">
-    <el-form ref="form" label-width="80px">
+    <el-form ref="form"  label-width="80px">
         <el-form-item label="名称">
             <span>{{ev.name}}</span>
         </el-form-item>
@@ -47,41 +47,48 @@
 
 </div>
 
-<script src="../../model/http_cdn.jsdelivr.net_npm_vue@2.7.14_dist_vue.js"></script>
-<script src="../../model/http_unpkg.com_axios_dist_axios.js"></script>
-<script src="../../model/http_unpkg.com_element-ui_lib_index.js"></script>
-<script src="../../model/http_cdn.jsdelivr.net_npm_js-cookie@3.0.1_dist_js.cookie.js"></script>
-<link rel="stylesheet" href="../../model/http_unpkg.com_element-ui_lib_theme-chalk_index.css">
 
+<script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<!-- 引入样式 -->
+<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+<!-- 引入组件库 -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
 <script>
-    axios.default.baseURL = "http://localhost:8080"
+    axios.default.baseURL="http://localhost:8080"
     new Vue({
         el: "#Evform",
         data: {
-            ev: {},
-            business: {},
-            payingSign: 0,
+            ev:{
+
+            },
+            business:{
+
+
+            },
+            payingSign:0,
             userId: null,
         },
         methods: {
             buy() {
 
                 const indent = {
-                    "evId": this.ev.id,
-                    "payingSign": this.payingSign,
-                    "userId": this.userId
+                    "evId":this.ev.id,
+                    "payingSign":this.payingSign,
+                    "userId":this.userId
                 }
-                axios.post("/indent/add", indent).then((res) => {
-                    if (res.data) {
+                axios.post("/indent/add",indent).then((res)=>{
+                    if(res.data){
                         this.$message({
                             message: '请等待商家联系！',
                             type: 'success'
                         });
-                        setTimeout(() => {
-                            window.location.href = "http://localhost:8080/EBshop/src/main.html";
-                        }, 3000)
+                        setTimeout(()=>{
+                            window.location.pathname = "/EBshop/src/main.html";
+                        },3000)
 
-                    } else {
+                    }else {
                         this.$message.error('购买失败！');
                     }
                 })
@@ -89,20 +96,20 @@
             },
 
             cancel() {
-                window.location.href = "http://localhost:8080/EBshop/src/main.html";
+                window.location.pathname = "/EBshop/src/main.html";
             }
         },
-        created() {
-            if (Cookies.get("userId") != null) {
-                this.userId = Cookies.get("userId");
+        created(){
+            if(Cookies.get("userId")!=null){
+                this.userId=Cookies.get("userId");
             }
             const ev_id = Cookies.get("ev_id");
-            axios.get("/ev/id/" + ev_id).then((res) => {
-                this.ev = res.data;
+            axios.get("/ev/id/"+ev_id).then((res)=>{
+                this.ev=res.data;
                 console.log(this.ev)
             })
-            axios.get("/business/id/" + ev.businessId).then((res) => {
-                this.ev = res.data;
+            axios.get("/business/id/"+ev.businessId).then((res)=>{
+                this.ev=res.data;
                 console.log(this.ev)
             })
         }
