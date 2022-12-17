@@ -28,7 +28,7 @@
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="BusinessMap">
         select
-        id, brand, account, password,phone, entry_sign
+        id, brand, account, password,phone, address, entry_sign
         from business
         <where>
             <if test="business.id != null">
@@ -86,18 +86,18 @@
     </select>
     <select id="queryByBrand" resultType="com.softwareEngineering.electrocar.entity.Business"
             parameterType="java.lang.String">
-        select id, brand, account, password, phone, entry_sign
+        select id, brand, account, password, phone, address, entry_sign
         from business
         where brand = #{brand}
     </select>
     <select id="queryByPhone" resultType="com.softwareEngineering.electrocar.entity.Business"
             parameterType="java.lang.String">
-        select id, brand, account, password, phone, entry_sign
+        select id, brand, account, password, phone, address, entry_sign
         from business
         where phone = #{phone}
     </select>
     <select id="queryByAccountAndPassword" resultType="com.softwareEngineering.electrocar.entity.Business">
-        select id, brand, account, password, phone, entry_sign
+        select id, brand, account, password, phone, address, entry_sign
         from business
         where account = #{account}
           and password = #{password}
