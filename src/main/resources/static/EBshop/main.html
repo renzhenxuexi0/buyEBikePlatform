@@ -54,7 +54,7 @@
                         <el-dropdown-item @click.native="breakLogin">注销</el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
-                <el-button type="text" @click="dialogTableVisible = true">查看您的订单</el-button>
+                <el-button type="text" @click="dialogTableVisible = true" v-show="flag2">查看您的订单</el-button>
             </el-col>
             <el-col><a :href="urlLogin" id="loginLink">登录</a></el-col>
             <el-col><a :href="urlRegister" id="registerLink">注册</a></el-col>
@@ -126,7 +126,8 @@
 
             urlLogin: "",
             urlRegister: "",
-            flag: false
+            flag: false,
+            flag2:false
         },
         methods: {
             handleCurrentChange2(val) {
@@ -240,11 +241,13 @@
                 document.getElementById("loginLink").style.display = "none"
                 document.getElementById("registerLink").style.display = "none"
                 this.flag = true
+                this.flag2=true
                 this.getAllIndent(this.currentPage - 1)
             } else {
                 document.getElementById("loginLink").style.display = ""
                 document.getElementById("registerLink").style.display = ""
                 this.flag = false
+                this.flag2=false
             }
 
         }
