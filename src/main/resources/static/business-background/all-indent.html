@@ -33,9 +33,15 @@
                 label="电动车名"
                 prop="ev.price">
         </el-table-column>
-        <el-table-column
-                label="购买方式"
-                prop="indent.payingSign">
+        <el-table-column label="订单状态">
+            <template slot-scope="scope">
+                <span v-if="scope.row.indent.payingSign==0">未处理的直接购买订单</span>
+                <span v-else-if="scope.row.indent.payingSign==1">未处理的以旧换新购买订单</span>
+                <span v-else-if="scope.row.indent.payingSign==2">已接受的直接购买的订单</span>
+                <span v-else-if="scope.row.indent.payingSign==3">已接受的以旧换新的订单</span>
+                <span v-else-if="scope.row.indent.payingSign==4">已拒绝的直接购买的订单</span>
+                <span v-else-if="scope.row.indent.payingSign==5">已拒绝的以旧换新的订单</span>
+            </template>
         </el-table-column>
         <el-table-column label="操作">
             <template slot-scope="scope">
@@ -165,18 +171,16 @@
                             user: {}
                         };
                         allContent.indent = res.data.content[i];
-                        axios.get("/ev/id/" + res.data.content[i].evId).then((res) => {
-                            allContent.ev = res.data.content[i];
-                            axios.get("/user/id/" + res.data.content[i].userId).then((res) => {
-                                allContent.user = res.data.content[i];
+                        axios.get("/ev/id/" + res.data.content[i].evId).then((res2) => {
+                            allContent.ev = res2.data;
+                            axios.get("/user/id/" + allContent.indent.userId).then((res3) => {
+                                allContent.user = res3.data;
                             })
                             console.log(allContent)
                             if (true){
                                 this.tableData.push(allContent);
                             }
                         })
-
-
                     }
                 });
             },
