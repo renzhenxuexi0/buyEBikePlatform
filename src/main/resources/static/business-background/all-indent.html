@@ -170,7 +170,7 @@
                             axios.get("/user/id/" + res.data.content[i].userId).then((res) => {
                                 allContent.user = res.data.content[i];
                             })
-                            console.log(res.data)
+                            console.log(allContent)
                             if (true){
                                 this.tableData.push(allContent);
                             }
