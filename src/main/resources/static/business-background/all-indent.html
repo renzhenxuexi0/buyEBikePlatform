@@ -166,9 +166,9 @@
                         };
                         allContent.indent = res.data.content[i];
                         axios.get("/ev/id/" + res.data.content[i].evId).then((res) => {
-                            allContent.ev = res.data;
+                            allContent.ev = res.data.content[i];
                             axios.get("/user/id/" + res.data.content[i].userId).then((res) => {
-                                allContent.user = res.data;
+                                allContent.user = res.data.content[i];
                             })
                             console.log(res.data)
                             if (true){
