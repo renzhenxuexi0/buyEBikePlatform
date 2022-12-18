@@ -167,13 +167,14 @@
                         allContent.indent = res.data.content[i];
                         axios.get("/ev/id/" + res.data.content[i].evId).then((res) => {
                             allContent.ev = res.data;
+                            axios.get("/user/id/" + res.data.content[i].userId).then((res) => {
+                                allContent.user = res.data;
+                            })
+                            if (allContent.ev.businessId==Cookies.get("businessId")){
+                                this.tableData.push(allContent);
+                            }
                         })
-                        axios.get("/user/id/" + res.data.content[i].userId).then((res) => {
-                            allContent.user = res.data;
-                        })
-                        if (allContent.ev.businessId==Cookies.get("businessId")){
-                            this.tableData.push(allContent);
-                        }
+
 
                     }
                 });
