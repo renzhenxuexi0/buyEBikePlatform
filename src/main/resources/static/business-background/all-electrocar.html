@@ -178,7 +178,7 @@
             },
             submit() {
                 axios.post("/ev/add", this.ev).then((res) => {
-                    if (res.data && this.ev.price.length > 0 && this.ev.model > 0 && this.fileList.length > 0) {
+                    if (res.data && this.ev.price.length > 0 && this.ev.model.length> 0 && this.fileList.length > 0) {
                         this.$message({
                             message: '添加成功！',
                             type: 'success'
