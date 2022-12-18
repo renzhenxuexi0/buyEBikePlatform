@@ -11,7 +11,7 @@
 
 </head>
 <body>
-<div id="all_electrocar">
+<div id="business_all_electrocar">
     <el-dialog title="新增商品" :visible.sync="dialogFormVisible">
         <el-form :model="ev">
             <el-form-item label="商家ID">
@@ -26,18 +26,17 @@
             <el-form-item label="价格">
                 <el-input v-model="ev.price"></el-input>
             </el-form-item>
-            <el-form-item  label="图片">
+            <el-form-item label="图片">
                 <el-upload
                         class="avatar-uploader"
-                        action="http://localhost:8080/ev/uploadingImage"
+                        action="/ev/uploadingImage"
                         :show-file-list="true"
                         :on-success="handleAvatarSuccess"
                         :before-upload="beforeAvatarUpload"
                         :file-list="fileList"
                         list-type="picture-card"
                         :on-remove="handleRemove"
-                        limit="1">
-
+                        :limit="1">
                     <i class="el-icon-plus avatar-uploader-icon"></i>
                 </el-upload>
             </el-form-item>
@@ -50,7 +49,7 @@
 
 
     <el-row :gutter="50">
-        <el-col :span="6">
+        <el-col :span="50">
             <el-input
                     placeholder="请输入电动车部分名字"
                     maxlength="10"
@@ -58,9 +57,8 @@
                     clearable>
             </el-input>
         </el-col>
-        <el-col :span="8">
+        <el-col :span="100">
             <el-button type="primary" plain @click="getAll(0,pageSize)">搜索</el-button>
-
         </el-col>
     </el-row>
     <el-table
@@ -93,11 +91,10 @@
                         :src="'/image/'+scope.row.image"></el-image>
             </template>
         </el-table-column>
-
-        <el-table-column label="操作" align="right">
-            <template slot="header">
+        <el-table-column align="right">
+            <template slot="header" slot-scope="scope">
                 <el-button
-                        size="mini"
+                        icon="el-icon-plus"
                         @click="dialogFormVisible=true">新增
                 </el-button>
             </template>
@@ -107,7 +104,6 @@
                         type="danger"
                         @click="handleDelete(scope.$index, scope.row)">下架
                 </el-button>
-
             </template>
         </el-table-column>
     </el-table>
@@ -131,7 +127,7 @@
 <script>
     axios.default.baseURL = 'http://localhost:8080'
     new Vue({
-        el: "#all_electrocar",
+        el: "#business_all_electrocar",
         data: {
             tableData: [],
             currentPage: 1,
@@ -151,10 +147,6 @@
         },
         created() {
 
-            /* Cookies.get("businessAccount")
-             Cookies.get("businessAddress")
-             Cookies.get("businessPhone")
-             Cookies.get("businessEntrySign")*/
             if (Cookies.get("businessId") != null) {
                 this.ev.brand = Cookies.get("businessBrand")
                 this.getAll(this.currentPage - 1, this.pageSize);
@@ -180,7 +172,7 @@
             },
             handleRemove(file, fileList) {
                 this.fileList = []
-                axios.get("/ev/deleteImage/" + ev.image).then((res) => {
+                axios.get("/ev/deleteImage/" + this.ev.image).then((res) => {
                     this.$message(res.data);
                 })
             },
@@ -195,6 +187,7 @@
                         this.dialogFormVisible = false;
                     } else {
                         this.$message.error('添加失败！');
+                        this.handleRemove()
                     }
                 })
             },

@@ -9,7 +9,7 @@
     <link href="../model/element_ui_index.css" rel="stylesheet">
 </head>
 <body>
-<div id="all_indent">
+<div id="business_all_indent">
     <el-table
             :data="tableData"
             style="width: 100%">
@@ -70,7 +70,7 @@
 <script>
     axios.default.baseURL = 'http://localhost:8080'
     new Vue({
-        el: "#all_indent",
+        el: "#business_all_indent",
         data: {
             tableData: [],
             indents: [],
