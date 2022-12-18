@@ -170,7 +170,8 @@
                             axios.get("/user/id/" + res.data.content[i].userId).then((res) => {
                                 allContent.user = res.data;
                             })
-                            if (res.data==Cookies.get("businessId")){
+                            console.log(res.data)
+                            if (res.data.content[i].evId==Cookies.get("evId")){
                                 this.tableData.push(allContent);
                             }
                         })
