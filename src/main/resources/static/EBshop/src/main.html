@@ -49,13 +49,12 @@
                 <el-dropdown v-show="flag">
                     <span>
                     {{user.username}}<i class="el-icon-arrow-down el-icon--right"></i>
-                        <el-button type="text" @click="dialogTableVisible = true">查看您的订单</el-button>
                     </span>
                     <el-dropdown-menu slot="dropdown">
                         <el-dropdown-item @click.native="breakLogin">注销</el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
-
+                <el-button type="text" @click="dialogTableVisible = true">查看您的订单</el-button>
             </el-col>
             <el-col><a :href="urlLogin" id="loginLink">登录</a></el-col>
             <el-col><a :href="urlRegister" id="registerLink">注册</a></el-col>
