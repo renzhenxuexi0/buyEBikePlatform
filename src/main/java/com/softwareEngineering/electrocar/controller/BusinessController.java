@@ -73,7 +73,6 @@ public class BusinessController {
      */
     @GetMapping("account/{account}/password/{password}")
     public ResponseEntity<Business> queryByAccountAndPassword(@PathVariable String account, @PathVariable String password) {
-        System.out.println(businessService.queryByAccountAndPassword(account, password));
         return ResponseEntity.ok(businessService.queryByAccountAndPassword(account, password));
     }
 
@@ -105,8 +104,8 @@ public class BusinessController {
      * @param id 主键
      * @return 删除是否成功
      */
-    @DeleteMapping
-    public ResponseEntity<Boolean> deleteById(Integer id) {
+    @DeleteMapping("{id}")
+    public ResponseEntity<Boolean> deleteById(@PathVariable Integer id) {
         return ResponseEntity.ok(this.businessService.deleteById(id));
     }
 

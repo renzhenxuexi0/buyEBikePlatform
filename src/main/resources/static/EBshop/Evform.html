@@ -48,13 +48,11 @@
 </div>
 
 
-<script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<!-- 引入样式 -->
-<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
-<!-- 引入组件库 -->
-<script src="https://unpkg.com/element-ui/lib/index.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
+<script src="../model/vue.js"></script>
+<script src="../model/axios.js"></script>
+<script src="../model/element_ui_index.js"></script>
+<script src="../model/js_cookie.js"></script>
+<link rel="stylesheet" href="../model/element_ui_index.css">
 <script>
     axios.default.baseURL="http://localhost:8080"
     new Vue({
@@ -85,7 +83,7 @@
                             type: 'success'
                         });
                         setTimeout(()=>{
-                            window.location.pathname = "/EBshop/src/main.html";
+                            window.location.pathname = "/EBshop/main.html";
                         },3000)
 
                     }else {
@@ -96,7 +94,7 @@
             },
 
             cancel() {
-                window.location.pathname = "/EBshop/src/main.html";
+                window.location.pathname = "/EBshop/main.html";
             }
         },
         created(){

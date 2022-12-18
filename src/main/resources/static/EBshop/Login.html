@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
-    <link href="../css/Login.css" rel="stylesheet" type="text/css"/>
+    <link href="./css/Login.css" rel="stylesheet" type="text/css"/>
 </head>
 
 <body>
@@ -30,11 +30,11 @@
     </el-form>
 </div>
 
-<script src="../../model/vue.js"></script>
-<script src="../../model/axios.js"></script>
-<script src="../../model/element_ui_index.js"></script>
-<script src="../../model/js_cookie.js"></script>
-<link rel="stylesheet" href="../../model/element_ui_index.css">
+<script src="../model/vue.js"></script>
+<script src="../model/axios.js"></script>
+<script src="../model/element_ui_index.js"></script>
+<script src="../model/js_cookie.js"></script>
+<link rel="stylesheet" href="../model/element_ui_index.css">
 <script>
     axios.default.baseURL = "http://localhost:8080"
 
@@ -52,14 +52,14 @@
                         Cookies.set("userAddress", this.user.address, { expires: 1,path:'' })
                         Cookies.set("userPhone", this.user.phone, { expires: 1,path:'' })
 
-                        window.location.pathname="/EBshop/src/main.html"
+                        window.location.pathname="/EBshop/main.html"
                     }else {
                         alert("账号或密码错误")
                     }
                 })
             },
             created(){
-                this.url = window.location.origin + "/EBshop/src/Register.html"
+                this.url = window.location.origin + "/EBshop/Register.html"
             }
         },
         data: {

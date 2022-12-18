@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Register</title>
-  <link href="../css/Register.css" rel="stylesheet" type="text/css"/>
+  <link href="./css/Register.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 
@@ -36,10 +36,11 @@
     </el-form-item>
   </el-form>
 </div>
-<script src="../../model/vue.js"></script>
-<script src="../../model/axios.js"></script>
-<script src="../../model/element_ui_index.js"></script>
-<link rel="stylesheet" href="../../model/element_ui_index.css">
+<script src="../model/vue.js"></script>
+<script src="../model/axios.js"></script>
+<script src="../model/element_ui_index.js"></script>
+<script src="../model/js_cookie.js"></script>
+<link rel="stylesheet" href="../model/element_ui_index.css">
 <script>
 
   axios.default.baseURL="http://localhost:8080"
@@ -85,16 +86,16 @@
         console.log(this.user)
         axios.post('/user/add',this.user).then(res=>{
           if(!this.show()&&!this.show1()&&res.data==true&&this.user.phone.length==11&&this.user.password.length>=6){
-            window.location.pathname="/EBshop/src/Login.html"
+            window.location.pathname="/EBshop/Login.html"
           }else {
-            alert(注册失败)
+            alert("注册失败")
           }
         }).catch(err=>{
           alert("请求超时")
         })
       },
       created(){
-        this.url = window.location.origin + "/EBshop/src/Login.html"
+        this.url = window.location.origin + "/EBshop/Login.html"
       }
     },
     data:{

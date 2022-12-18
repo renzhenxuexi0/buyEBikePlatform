@@ -77,11 +77,8 @@ public class UserController {
      */
     @GetMapping("/phone/{phone}/password/{password}")
     public ResponseEntity<User> queryByPhone(@PathVariable("phone") String phone,
-                                             @PathVariable("password") String password,
-                                             HttpServletRequest request, HttpServletResponse response) {
+                                             @PathVariable("password") String password) {
         User user = this.userService.queryByPhoneAndPassword(phone, password);
-        HttpSession session = request.getSession();
-        session.setAttribute("loginUser", user);
         return ResponseEntity.ok(user);
     }
 
@@ -93,7 +90,6 @@ public class UserController {
      */
     @PostMapping("/add")
     public ResponseEntity<Boolean> add(@RequestBody User user) {
-        System.out.println(user);
         return ResponseEntity.ok(this.userService.insert(user));
     }
 

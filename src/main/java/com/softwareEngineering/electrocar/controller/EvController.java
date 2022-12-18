@@ -105,11 +105,11 @@ public class EvController {
      * @return 删除是否成功
      */
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteById(@PathVariable Integer id) {
+    public ResponseEntity<Boolean> deleteById(@PathVariable Integer id) {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(this.evService.deleteById(id) + "");
+            return ResponseEntity.status(HttpStatus.OK).body(this.evService.deleteById(id));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NON_AUTHORITATIVE_INFORMATION).body("还有当前商品订单存在不能下架");
+            return ResponseEntity.status(HttpStatus.NON_AUTHORITATIVE_INFORMATION).body(false);
         }
 
     }

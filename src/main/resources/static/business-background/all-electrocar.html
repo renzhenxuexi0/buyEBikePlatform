@@ -164,6 +164,7 @@
             handleAvatarSuccess(res, file) {
                 this.ev.image = res
                 this.imageUrl = URL.createObjectURL(file.raw);
+                this.fileList.push(file)
             },
             beforeAvatarUpload(file) {
 
@@ -182,24 +183,26 @@
                 })
             },
             submit() {
-                axios.post("/ev/add", this.ev).then((res) => {
-                    if (res.data && this.ev.price.length > 0 && this.ev.model.length> 0 && this.fileList.length > 0&&this.ev.name.length>0) {
-                        this.$message({
-                            message: '添加成功！',
-                            type: 'success'
-                        });
-                        this.getAll(this.currentPage - 1, this.pageSize);
-                        this.dialogFormVisible = false;
-                    } else {
-                        this.$message.error('添加失败！');
-                        this.handleRemove()
-                    }
-                })
+                if (this.ev.price.length > 0 && this.ev.model.length> 0 && this.fileList.length > 0&&this.ev.name.length>0){
+                    axios.post("/ev/add", this.ev).then((res) => {
+                        if (res.data) {
+                            this.$message({
+                                message: '添加成功！',
+                                type: 'success'
+                            });
+                            this.getAll(this.currentPage - 1, this.pageSize);
+                            this.dialogFormVisible = false;
+                        } else {
+                            this.$message.error('添加失败！');
+                            this.handleRemove()
+                        }
+                    })
+                }
             },
             handleDelete(index, row) {
                 axios.delete("/ev/delete/" + row.id).then((res) => {
                     if (res.status == 200) {
-                        if (res.data == "true") {
+                        if (res.data) {
                             this.handleRemove();
                             this.$message({
                                 message: '删除成功',

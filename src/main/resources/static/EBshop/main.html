@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>主界面</title>
-    <link href="../css/main.css" rel="stylesheet" type="text/css"/>
+    <link href="./css/main.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="main">
@@ -96,11 +96,11 @@
 
 </div>
 
-<script src="../../model/vue.js"></script>
-<script src="../../model/axios.js"></script>
-<script src="../../model/element_ui_index.js"></script>
-<script src="../../model/js_cookie.js"></script>
-<link rel="stylesheet" href="../../model/element_ui_index.css">
+<script src="../model/vue.js"></script>
+<script src="../model/axios.js"></script>
+<script src="../model/element_ui_index.js"></script>
+<script src="../model/js_cookie.js"></script>
+<link rel="stylesheet" href="../model/element_ui_index.css">
 <script>
     axios.default.baseURL = "http://localhost:8080";
     let a = []
@@ -185,7 +185,7 @@
             onBuy(ev) {
                 if (this.user.id != null) {
                     Cookies.set("ev_id", ev.id, {expires: 1});
-                    window.location.pathname = "/EBshop/src/Evform.html"
+                    window.location.pathname = "/EBshop/Evform.html"
                 } else {
                     this.$notify({
                         title: '警告',
@@ -193,7 +193,7 @@
                         type: 'warning'
                     });
                     setTimeout(function () {
-                        window.location.pathname = "/EBshop/src/Login.html"
+                        window.location.pathname = "/EBshop/Login.html"
 
                     }, 3000)
 
@@ -228,8 +228,8 @@
         },
 
         created() {
-            this.urlLogin = window.location.origin + "/EBshop/src/Login.html"
-            this.urlRegister = window.location.origin + "/EBshop/src/Register.html"
+            this.urlLogin = window.location.origin + "/EBshop/Login.html"
+            this.urlRegister = window.location.origin + "/EBshop/Register.html"
 
             this.getAll(this.currentPage - 1)
             if (Cookies.get("userId") != null) {
