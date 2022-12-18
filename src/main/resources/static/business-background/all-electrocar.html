@@ -20,6 +20,9 @@
             <el-form-item label="品牌">
                 {{ev.brand}}
             </el-form-item>
+            <el-form-item label="名称">
+                <el-input v-model="ev.name"></el-input>
+            </el-form-item>
             <el-form-item label="型号">
                 <el-input v-model="ev.model"></el-input>
             </el-form-item>
@@ -138,6 +141,7 @@
             dialogFormVisible: false,
             ev: {
                 brand: "",
+                name: "",
                 model: "",
                 price: "",
                 image: "",
@@ -148,6 +152,7 @@
         created() {
 
             if (Cookies.get("businessId") != null) {
+                this.ev.businessId=Cookies.get("businessId")
                 this.ev.brand = Cookies.get("businessBrand")
                 this.getAll(this.currentPage - 1, this.pageSize);
             } else {
@@ -178,7 +183,7 @@
             },
             submit() {
                 axios.post("/ev/add", this.ev).then((res) => {
-                    if (res.data && this.ev.price.length > 0 && this.ev.model.length> 0 && this.fileList.length > 0) {
+                    if (res.data && this.ev.price.length > 0 && this.ev.model.length> 0 && this.fileList.length > 0&&this.ev.name.length>0) {
                         this.$message({
                             message: '添加成功！',
                             type: 'success'
